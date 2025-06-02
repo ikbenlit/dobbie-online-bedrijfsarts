@@ -69,59 +69,72 @@
 	<HowItWorks />
 	<Testimonials />
 	<Pricing 
-		prices={{
-			individual: {
+		tiers={[
+			{
 				name: "Individueel",
 				price: 12,
-				period: "maand",
+				priceSuffix: "/maand",
+				description: "Voor zelfstandige professionals en kleine praktijken",
 				features: [
-					"24/7 toegang tot DoBie",
-					"Onbeperkt vragen stellen",
-					"Wet- en regelgeving updates",
-					"Exporteren van gesprekken",
-					"Basis rapportages"
-				]
+					{ text: "24/7 toegang tot DoBie", included: true },
+					{ text: "Onbeperkt vragen stellen", included: true },
+					{ text: "Wet- en regelgeving updates", included: true },
+					{ text: "Exporteren van gesprekken", included: true },
+					{ text: "Basis rapportages", included: true }
+				],
+				ctaText: "Start gratis proefperiode",
+				ctaLink: "/login"
 			},
-			team: {
+			{
 				name: "Team",
 				price: 10,
-				period: "maand",
 				userRange: "2-25",
+				priceSuffix: "/maand per gebruiker",
+				description: "Voor HR-teams en middelgrote organisaties",
 				features: [
-					"Alles van Individueel",
-					"Team dashboard",
-					"Gedeelde kennisbank",
-					"Prioriteit support",
-					"Uitgebreide rapportages"
-				]
+					{ text: "Alles van Individueel", included: true },
+					{ text: "Team dashboard", included: true },
+					{ text: "Gedeelde kennisbank", included: true },
+					{ text: "Prioriteit support", included: true },
+					{ text: "Uitgebreide rapportages", included: true }
+				],
+				ctaText: "Vraag demo aan",
+				ctaLink: "/contact",
+				popular: true
 			},
-			organization: {
+			{
 				name: "Organisatie",
 				price: 8,
-				period: "maand",
 				userRange: "26-100",
+				priceSuffix: "/maand per gebruiker",
+				description: "Voor grote organisaties met meerdere afdelingen",
 				features: [
-					"Alles van Team",
-					"Organisatie dashboard",
-					"API toegang",
-					"Custom integraties",
-					"Dedicated support"
-				]
+					{ text: "Alles van Team", included: true },
+					{ text: "Organisatie dashboard", included: true },
+					{ text: "API toegang", included: true },
+					{ text: "Custom integraties", included: true },
+					{ text: "Dedicated support", included: true }
+				],
+				ctaText: "Neem contact op",
+				ctaLink: "/contact"
 			},
-			enterprise: {
+			{
 				name: "Enterprise",
 				price: 6,
-				period: "maand",
 				userRange: "100+",
+				priceSuffix: "/maand per gebruiker",
+				description: "Voor grote ondernemingen met specifieke eisen",
 				features: [
-					"Alles van Organisatie",
-					"Maatwerk oplossingen",
-					"SLA garantie",
-					"Account manager",
-					"On-premise optie"
-				]
+					{ text: "Alles van Organisatie", included: true },
+					{ text: "Maatwerk oplossingen", included: true },
+					{ text: "SLA garantie", included: true },
+					{ text: "Account manager", included: true },
+					{ text: "On-premise optie", included: true }
+				],
+				ctaText: "Plan gesprek in",
+				ctaLink: "/contact"
 			}
-		}}
+		]}
 	/>
 	<TryNow />
 	<Footer />

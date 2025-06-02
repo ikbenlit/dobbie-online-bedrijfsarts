@@ -433,39 +433,6 @@
     font-family: 'Times New Roman', serif;
   }
 
-  .welcome-banner {
-    font-family: 'Times New Roman', serif;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  .message {
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  .suggestion-button {
-    background-color: #E9B046;
-    color: #000000;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 16px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    transition: all 0.2s ease;
-    min-height: 44px;
-  }
-
-  .suggestion-button:hover {
-    background-color: #771138;
-    color: #FFFFFF;
-  }
-
-  .intro-text {
-    color: #3D3D3D;
-  }
-
   /* Typing indicator animaties behouden maar met nieuwe kleuren */
   .typing-dot {
     animation: typingAnimation 1.4s infinite ease-in-out;
@@ -489,9 +456,6 @@
       height: 100vh;
       max-width: 100%;
       margin: 0;
-    }
-    .message {
-      max-width: 90%;
     }
     .chat-messages {
       padding: 16px;
