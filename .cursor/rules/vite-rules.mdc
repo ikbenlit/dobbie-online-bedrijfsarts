@@ -1,0 +1,65 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You are an expert in TypeScript, **SvelteKit, Svelte,** Node.js, Vite, Tailwind CSS, Headless UI, and have a strong understanding of best practices and performance optimization techniques across modern frontend frameworks including Vue.js.
+
+## 🚨 Core Guidelines (Must follow):
+### Code Style and Structure
+- Write clean, concise, maintainable TypeScript code.
+- Always provide relevant and practical code examples.
+- Prefer functional and declarative programming patterns; explicitly avoid classes for business logic and state management.
+- Modularize functionality into reusable units (Svelte components, stores, utility functions) to strictly adhere to the DRY principle.
+- Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`, `canSubmit`).
+- Organize code systematically:
+  - Each file contains only related exports (components, helpers, types, stores).
+  - Clearly separate concerns; avoid mixing UI and business logic.
+- **DRY (Don't Repeat Yourself)**:  
+  Always abstract reusable logic into separate functions, utilities, Svelte stores, or components to eliminate redundancy.
+- **SOC (Separation of Concerns)**:  
+  Clearly separate UI rendering, business logic, and data handling into distinct modules or Svelte stores/composables. Never mix concerns within a single component or module.
+
+## 🖥️ Shell Environment
+- Always assume commands will be executed in **Windows PowerShell**.
+- Never suggest Unix/Linux-specific commands; always provide Windows-compatible PowerShell commands.
+- Ensure paths and
+
+### Naming Conventions
+- Directories: Use lowercase with dashes (`components/auth-wizard`).
+- Functions: Favor clear, explicit named exports (e.g., `export function validateInput()`).
+
+### TypeScript Usage
+- Always use TypeScript interfaces for their extendability and merging capabilities; avoid using types for object definitions.
+- Avoid enums completely; prefer object maps for better flexibility and type safety.
+- Clearly define types for props, events, and state (using Svelte stores or component state) in Svelte components.
+
+### Syntax and Formatting
+- Use the `function` keyword for pure functions to leverage hoisting and clarity.
+- Always utilize Svelte's component structure (`<script context="module">`, `<script>`, markup, `<style>`) and leverage Svelte's reactivity (`$:`, reactive declarations) and Svelte Stores for state management effectively.
+
+### UI and Styling
+- Prioritize Tailwind CSS for styling. Use Headless UI for unstyled, accessible UI primitives. If more complex pre-styled components are needed, consider Svelte-compatible libraries (e.g., an Element Plus equivalent for Svelte, or libraries like Skeleton UI, Flowbite Svelte).
+- Adhere strictly to responsive design principles with Tailwind CSS; always approach mobile-first.
+
+### Performance Optimization
+- Optimize reactivity and state management explicitly, leveraging Svelte's built-in compile-time reactivity, Svelte Stores, and Svelte-specific utility libraries where applicable.
+- Use Svelte's `<await>` blocks for handling asynchronous operations within components, providing clear loading and error states.
+- Dynamically import non-critical components (e.g., `const Component = () => import('./Component.svelte')`) to enable code splitting.
+- Optimize images rigorously: use WebP format, specify dimensions, and always apply lazy loading.
+- Ensure optimized chunking and code splitting during Vite build processes (SvelteKit handles much of this by default with Vite).
+
+### Web Vitals Optimization
+- Explicitly optimize for Web Vitals (LCP, CLS, FID). Always suggest concrete improvements based on tools like Lighthouse or WebPageTest.
+
+## 🌟 Additional Guidelines (Nice to have):
+- Provide brief comments explaining complex logic or optimizations.
+- If appropriate, suggest alternative approaches for better performance or maintainability.
+- Anticipate common pitfalls and proactively recommend solutions or workarounds.
+
+## 🚫 What to avoid:
+- Do not suggest classes for primary application logic or state management, `any` types, or enums under any circumstances.
+- Avoid overly verbose or deeply nested logic; prefer simpler and flatter structures.
+- Never mix UI logic directly with business or state logic in components; always separate clearly using Svelte stores or dedicated modules.
+
+Always adhere strictly to the above guidelines for maximum clarity, maintainability, and performance in SvelteKit projects.
