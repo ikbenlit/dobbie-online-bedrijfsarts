@@ -2,42 +2,30 @@ import { VertexAI } from '@google-cloud/vertexai';
 
 const VERTEX_PROJECT_ID = process.env.VERTEX_PROJECT_ID || 'dobbie-online-bedrijfsarts';
 
-// Setup voor Workload Identity (Vercel) vs Application Default Credentials (lokaal)
-let vertexAIOptions: any = {
-    project: VERTEX_PROJECT_ID,
-    location: 'europe-west1',
-};
-
-// Als we op Vercel draaien (Workload Identity environment variables aanwezig)
-if (process.env.GOOGLE_CLOUD_WORKLOAD_IDENTITY_PROVIDER && process.env.GOOGLE_CLOUD_SERVICE_ACCOUNT) {
-    console.log('🔧 Using Workload Identity for Vercel deployment');
-    
+// Voor productie (Vercel): gebruik JSON credentials uit environment variable
+if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
     try {
-        // Import alleen wanneer nodig (Vercel deployment)
-        const { GoogleAuth } = require('google-auth-library');
+        // Parse de JSON credentials en schrijf naar tijdelijk bestand
+        const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+        const fs = require('fs');
+        const path = '/tmp/gcp-key.json';
         
-        const auth = new GoogleAuth({
-            scopes: ['https://www.googleapis.com/auth/cloud-platform'],
-            credentials: {
-                type: 'external_account',
-                audience: `//iam.googleapis.com/${process.env.GOOGLE_CLOUD_WORKLOAD_IDENTITY_PROVIDER}`,
-                subject_token_type: 'urn:ietf:params:oauth:token-type:jwt',
-                subject_token_url: 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token',
-                service_account_impersonation_url: `https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/${process.env.GOOGLE_CLOUD_SERVICE_ACCOUNT}:generateAccessToken`,
-            }
-        });
+        fs.writeFileSync(path, JSON.stringify(credentials));
+        process.env.GOOGLE_APPLICATION_CREDENTIALS = path;
         
-        vertexAIOptions.authClient = auth;
+        console.log('✅ Google Cloud credentials configured from environment variable');
     } catch (error) {
-        console.error('❌ Failed to setup Workload Identity:', error);
-        console.log('🔄 Falling back to Application Default Credentials');
+        console.error('❌ Failed to setup Google Cloud credentials:', error);
     }
 } else {
-    console.log('🏠 Using Application Default Credentials for local development');
+    console.log('🏠 Using Application Default Credentials (local development)');
 }
 
 // Initialiseer Vertex AI client
-export const vertexAI = new VertexAI(vertexAIOptions);
+export const vertexAI = new VertexAI({
+    project: VERTEX_PROJECT_ID,
+    location: 'europe-west1', // EU regio voor AVG compliance
+});
 
 // DoBie specifieke configuratie
 const dobieConfig = {

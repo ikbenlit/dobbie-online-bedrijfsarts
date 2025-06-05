@@ -76,6 +76,7 @@
 	"dependencies": {
 		"@google-cloud/vertexai": "^1.10.0",
 		"@heroicons/react": "^2.2.0",
+		"@vercel/functions": "^2.1.0",
 		"clsx": "^2.1.1",
 		"firebase": "^11.6.0",
 		"lucide-svelte": "^0.511.0",
