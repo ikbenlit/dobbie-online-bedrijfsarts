@@ -13,6 +13,7 @@ declare global {
 			PUBLIC_SUPABASE_URL: string;
 			PUBLIC_SUPABASE_ANON_KEY: string;
 			ANTHROPIC_API_KEY: string;
+			VERTEX_PROJECT_ID: string;
 		}
 	}
 }

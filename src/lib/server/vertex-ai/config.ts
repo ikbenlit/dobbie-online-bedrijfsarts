@@ -1,5 +1,7 @@
 import { VertexAI } from '@google-cloud/vertexai';
-import { VERTEX_PROJECT_ID } from '$env/static/private';
+
+// Gebruik process.env direct voor server-side environment variabelen
+const VERTEX_PROJECT_ID = process.env.VERTEX_PROJECT_ID || 'dobbie-online-bedrijfsarts';
 
 // Initialiseer Vertex AI client
 export const vertexAI = new VertexAI({
