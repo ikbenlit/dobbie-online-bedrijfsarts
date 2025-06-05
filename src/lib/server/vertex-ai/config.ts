@@ -4,7 +4,9 @@ const VERTEX_PROJECT_ID = process.env.VERTEX_PROJECT_ID || 'dobbie-online-bedrij
 
 // Voor productie (Vercel): gebruik JSON credentials uit environment variable
 if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
-    try {
+    console.log('🔍 DEBUG: JSON env var exists:', !!process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+    console.log('🔍 DEBUG: JSON length:', process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON?.length);
+        try {
         // Parse de JSON credentials en schrijf naar tijdelijk bestand
         const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
         const fs = require('fs');
