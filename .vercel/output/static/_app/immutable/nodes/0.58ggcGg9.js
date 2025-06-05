@@ -1,1 +1,0 @@
-import{t as m,a as l}from"../chunks/zQXSIs6Z.js";import"../chunks/DTp8-LAM.js";import{J as r,L as t}from"../chunks/C_uJoBrX.js";import{s as n}from"../chunks/B0zQ5SLf.js";var p=m('<div class="min-h-screen flex flex-col"><main class="flex-grow"><!></main></div>');function x(e,s){var a=p(),o=r(a),i=r(o);n(i,s,"default",{}),t(o),t(a),l(e,a)}export{x as component};
