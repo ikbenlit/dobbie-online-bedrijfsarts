@@ -1,4 +1,5 @@
 import { VertexAI } from '@google-cloud/vertexai';
+import { writeFileSync } from 'fs';
 
 const VERTEX_PROJECT_ID = process.env.VERTEX_PROJECT_ID || 'dobbie-online-bedrijfsarts';
 
@@ -6,21 +7,27 @@ const VERTEX_PROJECT_ID = process.env.VERTEX_PROJECT_ID || 'dobbie-online-bedrij
 if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
     console.log('🔍 DEBUG: JSON env var exists:', !!process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
     console.log('🔍 DEBUG: JSON length:', process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON?.length);
-        try {
+    
+    try {
+        console.log('🔍 DEBUG: Attempting to parse JSON...');
         // Parse de JSON credentials en schrijf naar tijdelijk bestand
         const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
-        const fs = require('fs');
+        console.log('🔍 DEBUG: JSON parsed successfully, project_id:', credentials.project_id);
+        
         const path = '/tmp/gcp-key.json';
         
-        fs.writeFileSync(path, JSON.stringify(credentials));
+        writeFileSync(path, JSON.stringify(credentials));
         process.env.GOOGLE_APPLICATION_CREDENTIALS = path;
+        console.log('🔍 DEBUG: File written to:', path);
         
         console.log('✅ Google Cloud credentials configured from environment variable');
     } catch (error) {
         console.error('❌ Failed to setup Google Cloud credentials:', error);
+        console.error('🔍 DEBUG: Error details:', error instanceof Error ? error.message : String(error));
     }
 } else {
     console.log('🏠 Using Application Default Credentials (local development)');
+    console.log('🔍 DEBUG: No GOOGLE_APPLICATION_CREDENTIALS_JSON found');
 }
 
 // Initialiseer Vertex AI client
