@@ -42,8 +42,8 @@
 </script>
 
 <svelte:head>
-  <title>DoBbie - De Online Bedrijfsarts - Login</title>
-  <meta name="description" content="Log in om toegang te krijgen tot DoBbie De Online Bedrijfsarts." />
+  <title>DOBbie - De Online Bedrijfsarts - Login</title>
+  <meta name="description" content="Log in om toegang te krijgen tot DOBbie De Online Bedrijfsarts." />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
@@ -58,7 +58,7 @@
       <!-- Logo en welkomstbericht -->
       <div class="text-center mb-8">
         <h1 class="font-serif text-[28px] font-bold text-[#771138] mb-2">Welkom terug</h1>
-        <p class="text-[#3D3D3D] text-[15px]">Log in om verder te gaan met DoBbie - De Online Bedrijfsarts</p>
+        <p class="text-[#3D3D3D] text-[15px]">Log in om verder te gaan met DOBbie - De Online Bedrijfsarts</p>
       </div>
       
       <form on:submit|preventDefault={handleLogin} class="space-y-6">
@@ -138,7 +138,7 @@
   <div class="w-full md:w-3/5 text-white p-8 md:p-12 flex items-center relative overflow-hidden order-1 md:order-2 bg-[#771138] right-side">
     <div class="relative z-10 max-w-xl mx-auto flex flex-col items-center justify-center h-full">
       <h2 class="font-serif text-[28px] font-bold mb-4 text-center md:text-left text-white">24/7 professioneel advies over verzuim</h2>
-      <p class="text-[15px] mb-8 text-center md:text-left text-white opacity-90">DoBbie - De Online Bedrijfsarts helpt u met professionele begeleiding bij verzuim, Wet Poortwachter en personeelsbeleid.</p>
+      <p class="text-[15px] mb-8 text-center md:text-left text-white opacity-90">DOBbie - De Online Bedrijfsarts helpt u met professionele begeleiding bij verzuim, Wet Poortwachter en personeelsbeleid.</p>
       
       <div class="space-y-4 mb-8 w-full max-w-md">
         <div class="flex items-center p-4 rounded-md bg-white/10 backdrop-blur-md feature-item">

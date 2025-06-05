@@ -9,7 +9,7 @@
   // DoBbie's custom renderer voor bedrijfsarts-specifieke content
   const renderer = new marked.Renderer();
   
-  // Custom styling voor DoBie's professionele uitdrukkingen
+  // Custom styling voor DOBbie's professionele uitdrukkingen
   renderer.text = (token: Tokens.Text | Tokens.Escape | Tokens.Tag) => {
     let text = String(token.text ?? '');
     

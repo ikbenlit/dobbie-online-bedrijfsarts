@@ -200,7 +200,7 @@
     } catch (error) {
       console.error('Fout bij het streamen van de API:', error);
       messages = messages.map(msg =>
-        msg.id === botMessageId ? { ...msg, text: "Oeps, DoBbie ligt er zelf even uit. Probeer het zo opnieuw!" } : msg
+        msg.id === botMessageId ? { ...msg, text: "Oeps, DOBbie ligt er zelf even uit. Probeer het zo opnieuw!" } : msg
       );
       scrollToBottom();
     } finally {
@@ -241,7 +241,7 @@
           class:h-10={sidebarOpen}
           class:mx-auto={sidebarOpen}
         >
-          DoBbie
+          DOBbie
         </div>
       </div>
       
@@ -304,7 +304,7 @@
       <div class="logo w-8 h-8 bg-white rounded-full flex items-center justify-center font-bold text-[#771138] text-lg">
         D
       </div>
-      <h1 class="font-['Open_Sans'] font-bold text-xl text-white">DoBbie</h1>
+      <h1 class="font-['Open_Sans'] font-bold text-xl text-white">DOBbie</h1>
     </div>
 
     <!-- Chat Berichten Area met nieuwe kleuren -->
