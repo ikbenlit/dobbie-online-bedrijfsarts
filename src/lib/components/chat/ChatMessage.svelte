@@ -6,14 +6,14 @@
   export let sender: 'bot' | 'user' = 'bot';
   export let showAvatar: boolean = false;
 
-  // DoBie's custom renderer voor bedrijfsarts-specifieke content
+  // DoBbie's custom renderer voor bedrijfsarts-specifieke content
   const renderer = new marked.Renderer();
   
   // Custom styling voor DoBie's professionele uitdrukkingen
   renderer.text = (token: Tokens.Text | Tokens.Escape | Tokens.Tag) => {
     let text = String(token.text ?? '');
     
-    // DoBie's zakelijke keywords met subtiele styling
+    // DoBbie's zakelijke keywords met subtiele styling
     text = text
       .replace(/\bWet Verbetering Poortwachter\b/gi, '<span class="inline-flex items-center bg-[#771138]/10 text-[#771138] px-2 py-1 rounded font-semibold text-sm">⚖️ Wet Verbetering Poortwachter</span>')
       .replace(/\bWVP\b/gi, '<span class="inline-flex items-center bg-[#771138]/10 text-[#771138] px-2 py-1 rounded font-semibold text-sm">⚖️ WVP</span>')
@@ -37,7 +37,7 @@
     return text;
   };
   
-  // Custom links voor DoBie's professionele content
+  // Custom links voor DoBbie's professionele content
   renderer.link = function(token: Tokens.Link) {
     const { href, title, text } = token;
     if (text === '[RICHTLIJN]' || text === 'RICHTLIJN') {

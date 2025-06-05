@@ -6,7 +6,7 @@
 <section id="features" class="py-16 md:py-24 bg-white" use:animateOnScroll>
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="text-center mb-12 md:mb-16">
-			<h2 class="font-serif text-h2 font-bold text-bordeaux">Waarom De Online Bedrijfsarts?</h2>
+			<h2 class="font-serif text-h2 font-bold text-bordeaux">Waarom DoBbie?</h2>
 			<p class="mt-4 text-body text-gray-dark max-w-3xl mx-auto">
 				Professioneel advies over verzuim en re-integratie, direct beschikbaar wanneer u het nodig heeft. Efficiënt, betrouwbaar en altijd up-to-date met de laatste wet- en regelgeving.
 			</p>
