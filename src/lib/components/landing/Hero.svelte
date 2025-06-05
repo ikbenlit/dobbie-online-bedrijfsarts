@@ -31,7 +31,7 @@
                         </div>
                         <div class="flex justify-end mb-4">
                             <div class="bg-bordeaux text-white rounded-[16px_16px_4px_16px] py-2 px-4 max-w-[80%]">
-                                <p>Een medewerker is al 3 weken ziek. Wat moet ik doen?</p>
+                                <p class="text-white">Een medewerker is al 3 weken ziek. Wat moet ik doen?</p>
                             </div>
                         </div>
                         <div class="flex mb-4">

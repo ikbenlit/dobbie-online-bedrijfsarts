@@ -27,15 +27,6 @@
       </span>`;
     });
 
-    // Automatische emoji voor veelgebruikte termen
-    text = text
-      .replace(/\bverzuim\b/gi, '📊 verzuim')
-      .replace(/\bre-integratie\b/gi, '🔄 re-integratie')
-      .replace(/\bbedrijfsarts\b/gi, '👩‍⚕️ bedrijfsarts')
-      .replace(/\bpassend werk\b/gi, '🎯 passend werk')
-      .replace(/\bwerkgever\b/gi, '🏢 werkgever')
-      .replace(/\bwerknemer\b/gi, '👤 werknemer');
-
     // Proces stappen markeren
     text = text.replace(/stap (\d+)/gi, (match: string, stepNum: string) => {
       return `<span class="inline-flex items-center bg-[#D1D5DB] text-[#3D3D3D] px-2 py-1 rounded-lg text-sm font-medium">
