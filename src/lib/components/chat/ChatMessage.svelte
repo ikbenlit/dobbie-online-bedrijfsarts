@@ -13,7 +13,7 @@
   renderer.text = (token: Tokens.Text | Tokens.Escape | Tokens.Tag) => {
     let text = String(token.text ?? '');
     
-    // DoBbie's zakelijke keywords met subtiele styling
+    // DOBbie's zakelijke keywords met subtiele styling
     text = text
       .replace(/\bWet Verbetering Poortwachter\b/gi, '<span class="inline-flex items-center bg-[#771138]/10 text-[#771138] px-2 py-1 rounded font-semibold text-sm">⚖️ Wet Verbetering Poortwachter</span>')
       .replace(/\bWVP\b/gi, '<span class="inline-flex items-center bg-[#771138]/10 text-[#771138] px-2 py-1 rounded font-semibold text-sm">⚖️ WVP</span>')
@@ -37,7 +37,7 @@
     return text;
   };
   
-  // Custom links voor DoBbie's professionele content
+  // Custom links voor DOBbie's professionele content
   renderer.link = function(token: Tokens.Link) {
     const { href, title, text } = token;
     if (text === '[RICHTLIJN]' || text === 'RICHTLIJN') {
@@ -134,7 +134,7 @@
 {/if}
 
 <style>
-  /* Custom prose styling voor DoBie's professionele chatbot */
+  /* Custom prose styling voor DOBbie's professionele chatbot */
   :global(.prose-dobie) {
     --tw-prose-body: #3D3D3D;
     --tw-prose-headings: #771138;

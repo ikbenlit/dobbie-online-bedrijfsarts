@@ -19,10 +19,10 @@
   $: initials = getAvatarInitials(user);
 
   function getAvatarInitials(u: User): string {
-    if (u.name) {
-      return u.name
+    if (u.full_name) {
+      return u.full_name
         .split(' ')
-        .map(part => part[0])
+        .map((part: string) => part[0])
         .join('')
         .toUpperCase()
         .substring(0, 2);

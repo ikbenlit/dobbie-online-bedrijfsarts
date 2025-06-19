@@ -5,7 +5,7 @@
   import UserMenu from '$lib/components/ui/user-menu.svelte';
   import MobileMenuTrigger from '$lib/components/ui/mobile-menu-trigger.svelte';
   import { sidebarStore } from '$lib/stores/sidebarStore.js';
-  import { userStore, type User } from '$lib/stores/userStore.js';
+  import { user, type User } from '$lib/stores/userStore.js';
   import { browser } from '$app/environment';
   import { chatStore, selectedQuestionText } from '$lib/stores/chatStore.js';
   import CategoryChipContainer from '$lib/components/chat/CategoryChipContainer.svelte';
@@ -31,7 +31,7 @@
   
   // Haal de user state op voor de UserMenu component
   let currentUser: User | null = null;
-  userStore.subscribe(value => {
+  user.subscribe((value: User | null) => {
     currentUser = value;
   });
   

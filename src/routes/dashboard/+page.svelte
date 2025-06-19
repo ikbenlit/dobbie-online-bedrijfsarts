@@ -2,9 +2,9 @@
   import Sidebar from '$lib/components/ui/sidebar.svelte';
   import SidebarLink from '$lib/components/ui/sidebarlink.svelte';
   import UserMenu from '$lib/components/ui/user-menu.svelte';
-  import { userStore } from '$lib/stores/userStore.js';
+  import { user } from '$lib/stores/userStore.js';
   
-  let user = $userStore;
+  $: currentUser = $user;
 </script>
 
 <div class="flex h-screen bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
@@ -22,7 +22,7 @@
     </div>
     
     <div slot="user">
-      <UserMenu user={user} />
+      <UserMenu user={currentUser} />
     </div>
     
     <div slot="mobile" class="flex flex-col space-y-2 mt-10">
@@ -38,7 +38,7 @@
     </div>
     
     <div slot="user-mobile">
-      <UserMenu user={user} />
+      <UserMenu user={currentUser} />
     </div>
   </Sidebar>
   

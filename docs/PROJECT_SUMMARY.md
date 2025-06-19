@@ -38,7 +38,7 @@ Dit document biedt een overzicht van de SvelteKit applicatie, bedoeld als startp
 
 ### `package.json`
 
--   **Naam**: `legalboost-poc` (kan aangepast worden voor nieuwe projecten)
+-   **Naam**: `DoBbie - de online bedrijfsarts` (kan aangepast worden voor nieuwe projecten)
 -   **Versie**: `0.0.1`
 -   **Type**: `module` (ES Module syntax)
 -   **Belangrijke Scripts**:

@@ -1,43 +1,46 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  // Verwijder Firebase imports:
-  // import { auth } from '$lib/firebase/client'; 
-  // import { signInWithEmailAndPassword } from 'firebase/auth'; 
-  import { setUser } from '$lib/stores/userStore.js'; // Importeer setUser (met .js extensie)
+  import { signIn } from '$lib/stores/userStore.js';
   import AvatarBubble from '$lib/components/ui/AvatarBubble.svelte';
 
   let email = '';
   let password = '';
-  let isLoading = false; // Voor feedback op de knop
-  let errorMessage = ''; // Voor foutmeldingen
-  let rememberMe = false; // Toegevoegd voor de checkbox
+  let isLoading = false;
+  let errorMessage = '';
+  let rememberMe = false;
 
   async function handleLogin() {
-    isLoading = true;
-    errorMessage = ''; // Reset error message
-
-    // Simuleer een kleine vertraging voor UX
-    await new Promise(resolve => setTimeout(resolve, 500)); 
-
-    const validUsers = {
-      'demo@dobbie.nl': 'dobbie123', // Gebaseerd op HTML demo credentials
-    };
-
-    // Check hardcoded credentials
-    if (email in validUsers && validUsers[email as keyof typeof validUsers] === password) {
-      console.log('Succesvol ingelogd!');
-      // Update de user store met het e-mailadres
-      setUser(email);
-      // Redirect naar de chatbot pagina voor POC
-      goto('/chat'); 
-    } else {
-      console.error('Fout bij inloggen: Ongeldige gegevens');
-      errorMessage = 'Inloggen mislukt. Controleer je e-mailadres en wachtwoord.';
-      isLoading = false; // Stop loading state bij fout
+    if (!email || !password) {
+      errorMessage = 'Vul alle velden in.';
+      return;
     }
 
-    // isLoading wordt nu alleen false gezet bij een fout, 
-    // omdat bij succes de pagina navigeert.
+    isLoading = true;
+    errorMessage = '';
+
+    try {
+      // Gebruik Supabase auth voor echte authenticatie
+      await signIn(email, password);
+      
+      console.log('Succesvol ingelogd!');
+      // Redirect naar de chatbot pagina
+      goto('/chat');
+    } catch (error: any) {
+      console.error('Fout bij inloggen:', error);
+      
+      // User-friendly error messages
+      if (error.message?.includes('Invalid login credentials')) {
+        errorMessage = 'Onjuiste inloggegevens. Controleer je e-mailadres en wachtwoord.';
+      } else if (error.message?.includes('Email not confirmed')) {
+        errorMessage = 'Je account is nog niet bevestigd. Controleer je e-mail.';
+      } else if (error.message?.includes('Too many requests')) {
+        errorMessage = 'Te veel login pogingen. Probeer het later opnieuw.';
+      } else {
+        errorMessage = 'Er is een fout opgetreden. Probeer het opnieuw.';
+      }
+      
+      isLoading = false;
+    }
   }
 </script>
 
@@ -121,8 +124,12 @@
           </p>
         {/if}
 
-        <div class="text-center">
-          <a href="/" class="text-[14px] text-[#707070] hover:text-[#3D3D3D] transition-colors duration-200">Terug naar home</a>
+        <div class="text-center space-y-2">
+          <p class="text-[14px] text-[#707070]">
+            Nog geen account? 
+            <a href="/register" class="text-[#771138] hover:text-[#5A0D29] font-semibold transition-colors duration-200">Registreren</a>
+          </p>
+          <a href="/" class="block text-[14px] text-[#707070] hover:text-[#3D3D3D] transition-colors duration-200">Terug naar home</a>
         </div>
       </form>
 

@@ -1,0 +1,28 @@
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
+
+CREATE TABLE public.organizations (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  org_code text NOT NULL UNIQUE,
+  name text NOT NULL,
+  billing_email text,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT organizations_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.profiles (
+  id uuid NOT NULL,
+  email text NOT NULL,
+  full_name text NOT NULL,
+  account_type text NOT NULL CHECK (account_type = ANY (ARRAY['individual'::text, 'organization_member'::text])),
+  organization_id uuid,
+  subscription_status text DEFAULT 'trial'::text CHECK (subscription_status = ANY (ARRAY['trial'::text, 'active'::text, 'inactive'::text, 'blocked'::text])),
+  trial_start_date timestamp with time zone DEFAULT now(),
+  trial_end_date timestamp with time zone DEFAULT (now() + '7 days'::interval),
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  user_type text NOT NULL DEFAULT 'user'::text CHECK (user_type = ANY (ARRAY['user'::text, 'admin'::text, 'super_admin'::text])),
+  CONSTRAINT profiles_pkey PRIMARY KEY (id),
+  CONSTRAINT profiles_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES public.organizations(id),
+  CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id)
+);
