@@ -267,7 +267,7 @@
 
 # Sessie Log: Debuggen van de User Creation Trigger
 
-**Datum:** 2025-06-19
+**Datum:** 2025-06-19 13:18
 
 ## Doel
 
@@ -307,5 +307,37 @@ De focus verschoof naar de permissies van de database-rol die de trigger uitvoer
 Na het toepassen van de laatste migratie met de correcte `search_path`, werkte het aanmaken van een nieuwe gebruiker onmiddellijk en foutloos. Een `SELECT` query op de `profiles` tabel bevestigde dat voor de testgebruiker een profiel was aangemaakt met alle correcte, standaardwaarden.
 
 **Conclusie:** Het probleem is succesvol opgelost. De sleutel tot de oplossing was het correct instellen van de `search_path` binnen de `SECURITY DEFINER` functie, een subtiliteit in de PostgreSQL/Supabase-architectuur die aanvankelijk over het hoofd werd gezien.
+
+---
+
+### 📅 19 juni 2025 14:35 - Session #9 | RLS Debugging & Fixing Individual Registration
+
+**Focus:** Oplossen van een '500 Internal Server Error' en een 'infinite recursion' fout tijdens de registratie van individuele gebruikers.
+**Goal:** Een stabiel en veilig registratieproces voor alle gebruikerstypes.
+
+**🏆 MAJOR ACHIEVEMENTS:**
+- [x] **'Individual User' Registratie Fout Opgelost**
+  - ✅ Probleem geïdentificeerd: Anonieme gebruikers konden de 'INDIVIDUAL' organisatie niet lezen door te strikte RLS-policies.
+  - ✅ Oplossing: Een nieuwe RLS-policy (`Allow anon read for INDIVIDUAL organization`) toegevoegd die anonieme gebruikers selectief toegang geeft.
+  - ✅ Migratie `20250126_fix_individual_user_registration_rls.sql` aangemaakt en toegepast.
+
+- [x] **'Infinite Recursion' RLS Fout Opgelost**
+  - ✅ Probleem geïdentificeerd: RLS-policies voor `super_admin` checks op `profiles` en `organizations` veroorzaakten een oneindige lus.
+  - ✅ Oplossing: Een veilige `SECURITY DEFINER` functie (`get_my_user_type`) geïmplementeerd die de RLS-check omzeilt.
+  - ✅ Oude, problematische policies vervangen door nieuwe, veilige versies.
+  - ✅ Migratie `20250127_fix_rls_recursion.sql` aangemaakt en toegepast.
+
+**Key Technical Wins:**
+- ✅ **Robuuste RLS Architectuur**: De RLS-laag is nu immuun voor recursieproblemen door het gebruik van een `SECURITY DEFINER` helper-functie.
+- ✅ **Granulaire & Veilige Policies**: De policies zijn nu zowel veilig als functioneel, en staan de nodige operaties toe zonder onnodige data bloot te geven.
+- ✅ **Idempotente Migraties**: De migratiescripts zijn bijgewerkt met `DROP POLICY IF EXISTS` om herbruikbaar en robuust te zijn.
+
+**Lessons Learned:**
+- RLS-policies die subqueries op dezelfde tabel uitvoeren zijn een bekende bron van 'infinite recursion'. Een `SECURITY DEFINER` functie is de best practice om dit te voorkomen.
+- Anonieme gebruikers (`anon` rol) hebben expliciete `SELECT` rechten nodig voor alle data die nodig is tijdens publieke processen. Een 500-error kan op een RLS-probleem duiden.
+
+**Next Phase:** Verdere applicatie-testing. Het registratiesysteem is nu stabiel.
+
+---
 
 Eerste session log:
