@@ -71,12 +71,12 @@
 				<textarea
 					id="message"
 					name="message"
-					rows={4}
-					bind:value={message}
+					rows="4"
 					class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
 					placeholder="Vertel ons over je ervaring met DoBbie en je wensen..."
+					bind:value={message}
 					required
-				/>
+				></textarea>
 			</div>
 		</div>
 

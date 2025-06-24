@@ -13,19 +13,19 @@
   renderer.text = (token: Tokens.Text | Tokens.Escape | Tokens.Tag) => {
     let text = String(token.text ?? '');
     
-    // DOBbie's zakelijke keywords met subtiele styling
-    text = text
-      .replace(/\bWet Verbetering Poortwachter\b/gi, '<span class="inline-flex items-center bg-[#771138]/10 text-[#771138] px-2 py-1 rounded font-semibold text-sm">⚖️ Wet Verbetering Poortwachter</span>')
-      .replace(/\bWVP\b/gi, '<span class="inline-flex items-center bg-[#771138]/10 text-[#771138] px-2 py-1 rounded font-semibold text-sm">⚖️ WVP</span>')
-      .replace(/\bArbowet\b/gi, '<span class="inline-flex items-center bg-[#3D3D3D]/10 text-[#3D3D3D] px-2 py-1 rounded font-semibold text-sm">📋 Arbowet</span>')
-      .replace(/\bAVG\b/gi, '<span class="inline-flex items-center bg-[#3D3D3D]/10 text-[#3D3D3D] px-2 py-1 rounded font-semibold text-sm">🔒 AVG</span>');
+    // DOBbie's zakelijke keywords met subtiele styling - deze styling is voor nu uitgeschakeld - alleen inschakelen oner specifieke vermelding
+    //text = text
+    //  .replace(/\bWet Verbetering Poortwachter\b/gi, '<span class="inline-flex items-center bg-[#771138]/10 text-[#771138] px-2 py-1 rounded font-semibold text-sm">⚖️ Wet Verbetering Poortwachter</span>')
+    //  .replace(/\bWVP\b/gi, '<span class="inline-flex items-center bg-[#771138]/10 text-[#771138] px-2 py-1 rounded font-semibold text-sm">⚖️ WVP</span>')
+    //  .replace(/\bArbowet\b/gi, '<span class="inline-flex items-center bg-[#3D3D3D]/10 text-[#3D3D3D] px-2 py-1 rounded font-semibold text-sm">📋 Arbowet</span>')
+    //  .replace(/\bAVG\b/gi, '<span class="inline-flex items-center bg-[#3D3D3D]/10 text-[#3D3D3D] px-2 py-1 rounded font-semibold text-sm">🔒 AVG</span>');
 
     // Termijnmarkering met professionele badges
-    text = text.replace(/(\d+)\s*(weken|dagen|maanden|jaar)/gi, (match: string, amount: string, period: string) => {
-      return `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#E9B046]/20 text-[#E9B046] border border-[#E9B046]/30">
-        🕒 ${amount} ${period}
-      </span>`;
-    });
+    //text = text.replace(/(\d+)\s*(weken|dagen|maanden|jaar)/gi, (match: string, amount: string, period: string) => {
+    //  return `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#E9B046]/20 text-[#E9B046] border border-[#E9B046]/30">
+    //    🕒 ${amount} ${period}
+    //  </span>`;
+    //});
 
     // Proces stappen markeren
     text = text.replace(/stap (\d+)/gi, (match: string, stepNum: string) => {
@@ -62,32 +62,50 @@
   // Custom list rendering voor actielijsten en procedures
   renderer.list = function(token: Tokens.List) {
     const ordered = token.ordered ?? false;
+    const procedureKeywords = ['Meld', 'Plan', 'Vraag', 'Bespreek', 'Controleer', 'Documenteer'];
+    
     const itemsHtml = (token.items ?? [])
-      .map(item => `<li class="flex items-start"><span class="mr-2 mt-1 text-[#771138]">${ordered ? '📋' : '•'}</span><span>${this.parser.parse(item.tokens)}</span></li>`)
+      .map(item => {
+        let itemText = this.parser.parseInline(item.tokens);
+        // Workaround voor **bold**
+        itemText = itemText.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-[#771138]">$1</strong>');
+        
+        // Maak het eerste woord van een procedure-stap vet en rood
+        const firstWord = item.text.split(' ')[0];
+        if (procedureKeywords.includes(firstWord)) {
+           // We vervangen de platte tekst in de gerenderde HTML
+           itemText = itemText.replace(firstWord, `<strong class="font-semibold text-[#771138]">${firstWord}</strong>`);
+        }
+
+        return `<li class="flex items-start"><span class="mr-2 mt-1 text-[#771138]">${ordered ? '📋' : '•'}</span><span>${itemText}</span></li>`;
+      })
       .join('');
     
-    // Check of het een procedure-lijst is
-    if (itemsHtml.includes('Meld ') || itemsHtml.includes('Plan ') || itemsHtml.includes('Controleer ') || 
-        itemsHtml.includes('Bespreek ') || itemsHtml.includes('Documenteer ')) {
-      return `<div class="bg-[#F5F2EB] rounded-lg p-4 my-4 border-l-4 border-[#771138]">
-        <h4 class="font-semibold text-[#771138] mb-3 flex items-center">
+    // Check of het een procedure-lijst is gebaseerd op de onbewerkte text
+    const rawTextContent = token.items.map(item => item.text).join(' ');
+    const isProcedureList = procedureKeywords.some(keyword => rawTextContent.includes(keyword));
+
+    if (isProcedureList) {
+      return `<div class="bg-[#F5F2EB] rounded-lg p-4 mb-4">
+        <h4 class="font-semibold text-[#771138] text-lg mb-3 flex items-center">
           📋 <span class="ml-2">Te ondernemen stappen:</span>
         </h4>
         <ul class="space-y-2 text-[#3D3D3D]">${itemsHtml}</ul>
       </div>`;
     }
     
-    const listClass = ordered ? 'list-decimal' : 'list-disc';
-    return `<${ordered ? 'ol' : 'ul'} class="${listClass} ml-4 space-y-1 text-[#3D3D3D]">${itemsHtml}</${ordered ? 'ol' : 'ul'}>`;
+    // De 'list-disc' en 'list-decimal' classes zijn niet nodig omdat we custom bullets gebruiken.
+    // Ze worden verwijderd om ongewenste inspringing te voorkomen.
+    const listClass = ordered ? '' : ''; 
+    return `<${ordered ? 'ol' : 'ul'} class="${listClass} space-y-1 text-[#3D3D3D]">${itemsHtml}</${ordered ? 'ol' : 'ul'}>`;
   };
 
-  // Custom blockquotes voor belangrijke informatie
+  // Custom blockquotes voor belangrijke informatie -> neutrale stijl zonder border
   renderer.blockquote = function(token: Tokens.Blockquote) {
-    return `<div class="bg-gradient-to-r from-[#F5F2EB] to-[#FFFFFF] border-l-4 border-[#E9B046] p-4 my-4 rounded-r-lg">
-      <div class="flex items-start">
-        <span class="text-xl mr-3 text-[#E9B046]">⚠️</span>
-        <div class="text-[#3D3D3D] font-medium">${token.text ?? ''}</div>
-      </div>
+    // Vervang de waarschuwingsstijl met een neutrale, professionele blockquote.
+    const text = this.parser.parse(token.tokens);
+    return `<div class="bg-[#F5F2EB]/80 p-4 my-4 rounded-lg">
+      <div class="text-[#3D3D3D]">${text}</div>
     </div>`;
   };
 
@@ -177,12 +195,14 @@
   :global(.prose-dobie ul) {
     margin-top: 0.75em;
     margin-bottom: 0.75em;
+    padding-left: 0;
   }
 
   :global(.prose-dobie li) {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
     line-height: 1.5;
+    font-size: 15px;
   }
 
   /* Styling voor strong/bold text */

@@ -568,3 +568,32 @@ Na het toepassen van de laatste migratie met de correcte `search_path`, werkte h
 - Nieuwe gebruikers kunnen zich succesvol registreren (individueel + organisatie)
 - DOBbie chat functionaliteit werkt met Vertex AI backend
 - Verbeterde security en gebruikerservaring door Nederlandse foutmeldingen
+
+### 📅 24-06-2025 14:19 - Session #14 | ChatMessage Component Styling & Markdown Parsing Refinement
+
+**Focus:** Verfijnen van de visuele weergave van bot-berichten in de chat, met name lijsten, blockquotes en de accentuering van tekst, om volledig aan te sluiten bij de DoBbie huisstijl en specifieke UI wensen.
+**Goal:** Een pixel-perfecte en semantisch correcte weergave van markdown in het `ChatMessage.svelte` component, waarbij de layout van lijsten en de styling van actiewoorden volledig naar wens zijn aangepast en alle visuele inconsistenties (zoals ongewenste borders en inspringing) zijn opgelost.
+
+**🏆 MAJOR ACHIEVEMENTS:**
+- [x] **Markdown Rendering Geperfectioneerd**
+  - ✅ Foutieve weergave van blockquotes als "waarschuwingen" gecorrigeerd naar een neutrale, professionele stijl zonder borders.
+  - ✅ Lijst-styling hersteld en verfijnd voor perfecte linker-uitlijning en consistente tekstgrootte.
+  - ✅ Ongewenste borders en inspringing bij lijsten en blockquotes succesvol verwijderd.
+  - ✅ Styling van "procedure-lijsten" aangepast: specifieke actiewoorden worden nu programmatisch vetgedrukt en rood gemaakt voor extra duidelijkheid.
+  - ✅ De titel van stappenplannen is prominenter gemaakt en de witruimte is geoptimaliseerd.
+
+**Key Technical Wins:**
+- ✅ **Iteratieve `marked` Renderer Fijn-afstelling**: De custom renderers voor `<blockquote>` en `<li>` zijn stapsgewijs aangepast om de layout (borders, padding, margin) en tekst-styling (font-size, programmatisch `<strong>` tags toevoegen) te perfectioneren.
+- ✅ **Gerichte CSS & Class Verwijdering**: De oorzaak van ongewenste inspringing (`list-disc` class) werd correct geïdentificeerd en verwijderd in de renderer voor pixel-perfecte uitlijning.
+- ✅ **Dynamische Keyword Styling**: De `renderer.list` functie is uitgebreid om procedurele keywords te herkennen en deze dynamisch te stylen, wat de leesbaarheid van stappenplannen verhoogt.
+
+**Scope Management Success:**
+- ✅ **Component-Level Focus**: Alle wijzigingen beperkt tot het `ChatMessage.svelte` component, waardoor onbedoelde neveneffecten in de rest van de applicatie werden voorkomen.
+- ✅ **Geen Nieuwe Dependencies**: Alle problemen opgelost binnen de bestaande `marked` bibliotheek en SvelteKit-features.
+
+**Lessons Learned:**
+- Styling van lijsten vereist een combinatie van de HTML-renderer (verwijderen van Tailwind classes als `ml-4`) en globale CSS (`padding-left: 0`) voor volledige controle over de uitlijning.
+- Browser-default stijlen (zoals die van `list-disc`) kunnen onverwachte layout-problemen veroorzaken. Het expliciet verwijderen van deze classes is soms nodig.
+- Iteratieve verfijning op basis van visuele feedback is een effectieve manier om tot een pixel-perfect ontwerp te komen.
+
+**Next Phase:** De applicatie is visueel stabiel. Klaar voor finale controles.

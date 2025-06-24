@@ -2,14 +2,24 @@
 // Run met: node test-vertex.js
 
 import { VertexAI } from '@google-cloud/vertexai';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 async function testVertexAI() {
   console.log('🚀 Testing Vertex AI connection...\n');
   
+  const projectId = process.env.VERTEX_PROJECT_ID;
+  if (!projectId) {
+    console.error('❌ Missing environment variable: VERTEX_PROJECT_ID');
+    return;
+  }
+
   try {
     // Initialize Vertex AI
     const vertex_ai = new VertexAI({
-      project: 'dobbie-online-bedrijfsarts',
+      project: projectId,
       location: 'europe-west1', // EU regio voor AVG compliance
     });
 

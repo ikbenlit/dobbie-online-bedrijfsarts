@@ -16,9 +16,12 @@ Thumbs.db
 .env.*
 !.env.example
 !.env.test
+.env.local
+.env.development
 
 # Google Cloud credentials
 credentials/
+credentials/google-service-account.json
 
 # Vite
 vite.config.js.timestamp-*

@@ -1,5 +1,5 @@
 import { VertexAI } from '@google-cloud/vertexai';
-import { writeFileSync, readFileSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
 
 // Load environment variables manually for SvelteKit server context
 function loadEnvVariables() {
@@ -21,7 +21,11 @@ function loadEnvVariables() {
 
 loadEnvVariables();
 
-const VERTEX_PROJECT_ID = process.env.VERTEX_PROJECT_ID || 'dobbie-online-bedrijfsarts';
+const VERTEX_PROJECT_ID = process.env.VERTEX_PROJECT_ID;
+
+if (!VERTEX_PROJECT_ID) {
+    throw new Error("Missing required environment variable: VERTEX_PROJECT_ID");
+}
 
 // Voor productie (Vercel): gebruik JSON credentials uit environment variable
 if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
@@ -53,8 +57,7 @@ if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
     // Check if credentials file exists
     if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
         try {
-            const fs = require('fs');
-            if (!fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
+            if (!existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
                 console.error('❌ GOOGLE_APPLICATION_CREDENTIALS file not found:', process.env.GOOGLE_APPLICATION_CREDENTIALS);
                 console.error('🔧 Please create the service account key file or set GOOGLE_APPLICATION_CREDENTIALS_JSON');
             } else {

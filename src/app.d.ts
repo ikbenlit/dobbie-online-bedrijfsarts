@@ -6,8 +6,8 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			supabase: import('@supabase/supabase-js').SupabaseClient
-			getSession(): Promise<import('@supabase/supabase-js').Session | null>
+			supabase: import('@supabase/supabase-js').SupabaseClient<import('@supabase/supabase-js').Database>
+			getUser(): Promise<import('@supabase/supabase-js').User | null>
 		}
 		interface PageData {
 			session: import('@supabase/supabase-js').Session | null

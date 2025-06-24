@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { user } from '$lib/stores/userStore';
-	import { stores } from '$app/stores';
 	import { derived } from 'svelte/store';
 	import Icon from '$lib/components/ui/Icon.svelte';
 

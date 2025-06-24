@@ -58,6 +58,17 @@
     showAllCategories = !showAllCategories;
   }
 
+  // Functie om de modal te sluiten en toegankelijkheid te beheren
+  function handleClose() {
+    showAllCategories = false;
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleClose();
+    }
+  }
+
 </script>
 
 {#if isLoading}
@@ -108,7 +119,13 @@
 
   <!-- MODAL: Categoriekiezer -->
   {#if showAllCategories}
-    <div class="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-40" on:click={() => showAllCategories = false}>
+    <div 
+      class="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-40" 
+      on:click={handleClose}
+      on:keydown={handleKeyDown}
+      role="button"
+      tabindex="0"
+    >
       <div class="bg-white rounded-xl shadow-lg p-6 max-w-lg w-full relative" on:click|stopPropagation>
         <button class="absolute top-3 right-3 text-gray-400 hover:text-gray-600" aria-label="Sluiten" on:click={() => showAllCategories = false}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
