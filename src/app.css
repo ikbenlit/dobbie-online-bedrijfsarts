@@ -1,0 +1,110 @@
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300; /* Light */
+  font-display: swap;
+  src: url('/fonts/Poppins-Light.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400; /* Regular */
+  font-display: swap;
+  src: url('/fonts/Poppins-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500; /* Medium */
+  font-display: swap;
+  src: url('/fonts/Poppins-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700; /* Bold */
+  font-display: swap;
+  src: url('/fonts/Poppins-Bold.woff2') format('woff2');
+}
+
+/* Lora Font Definitions */
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400; /* Regular */
+  font-display: swap;
+  src: url('/fonts/Lora-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400; /* Italic */
+  font-display: swap;
+  src: url('/fonts/Lora-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700; /* Bold */
+  font-display: swap;
+  src: url('/fonts/Lora-Bold.woff2') format('woff2');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-white text-gray-dark font-sans text-body transition-colors duration-300;
+  }
+  
+  h1 {
+    @apply font-serif text-h1 font-bold text-bordeaux;
+  }
+  
+  h2 {
+    @apply font-serif text-h2 font-bold text-bordeaux;
+  }
+  
+  h3 {
+    @apply font-sans text-h3 font-semibold text-bordeaux;
+  }
+  
+  p {
+    @apply text-body text-gray-dark;
+  }
+}
+
+@layer components {
+  /* Primaire knop: Bordeaux achtergrond, witte tekst */
+  .btn-primary {
+    @apply bg-bordeaux text-white font-bold text-button py-2 px-4 rounded-button hover:bg-bordeaux-hover transition-colors duration-300;
+  }
+
+  /* Secundaire knop: Wit met bordeaux rand */
+  .btn-secondary {
+    @apply bg-white text-bordeaux font-bold text-button py-2 px-4 rounded-button border-2 border-bordeaux hover:bg-bordeaux hover:text-white transition-colors duration-300;
+  }
+  
+  .card {
+    @apply bg-white p-6 rounded-card shadow-card;
+  }
+
+  .chat-bubble {
+    @apply relative;
+  }
+
+  .chat-bubble-bot {
+    @apply bg-cream text-gray-dark rounded-[16px_16px_16px_4px] px-4 py-3 max-w-[80%];
+  }
+
+  .chat-bubble-user {
+    @apply bg-bordeaux text-white rounded-[16px_16px_4px_16px] px-4 py-3 max-w-[80%];
+  }
+}

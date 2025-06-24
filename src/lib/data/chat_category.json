@@ -1,0 +1,55 @@
+{
+  "version": "1.0.0",
+  "createdAt": "2025-06-02T10:00:00Z",
+  "updatedAt": "2025-06-02T10:00:00Z",
+  "categoriesData": [
+    {
+      "id": "wet-verbetering-poortwachter",
+      "title": "Wet Verbetering Poortwachter",
+      "color": "#771138",
+      "icon": "Scale",
+      "questions": [
+        { "text": "Welke stappen moet ik nemen bij een ziekmelding?" },
+        { "text": "Hoe lang heb ik de tijd voor een probleemanalyse?" },
+        { "text": "Wat gebeurt er als ik de termijnen overschrijd?" },
+        { "text": "Wanneer moet ik de bedrijfsarts inschakelen?" }
+      ]
+    },
+    {
+      "id": "communicatie-gesprekken",
+      "title": "Communicatie & Gesprekken",
+      "color": "#E9B046",
+      "icon": "MessageCircle",
+      "questions": [
+        { "text": "Hoe voer ik een gesprek met een zieke medewerker?" },
+        { "text": "Wat mag ik wel en niet vragen tijdens ziekte?" },
+        { "text": "Medewerker weigert het advies van de bedrijfsarts, wat nu?" },
+        { "text": "Hoe documenteer ik afspraken correct?" }
+      ]
+    },
+    {
+      "id": "beleid-procedures",
+      "title": "Beleid & Procedures",
+      "color": "#3D3D3D",
+      "icon": "FileText",
+      "questions": [
+        { "text": "Hoe stel ik een verzuimbeleid op?" },
+        { "text": "Welke rechten heeft een zieke werknemer?" },
+        { "text": "Wat zijn mijn verplichtingen als werkgever?" },
+        { "text": "Hoe ga ik om met frequent kortdurend verzuim?" }
+      ]
+    },
+    {
+      "id": "terugkeer-reintegratie",
+      "title": "Terugkeer & Re-integratie",
+      "color": "#D1D5DB",
+      "icon": "RotateCcw",
+      "questions": [
+        { "text": "Hoe plan ik een succesvolle terugkeer?" },
+        { "text": "Wat is passend werk en hoe bepaal ik dit?" },
+        { "text": "Medewerker kan niet volledig terugkeren, wat nu?" },
+        { "text": "Welke aanpassingen kan ik aanbieden?" }
+      ]
+    }
+  ]
+}
