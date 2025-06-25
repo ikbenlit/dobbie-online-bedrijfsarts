@@ -5,7 +5,7 @@ export const load: LayoutServerLoad = async ({ locals: { getUser, supabase } }) 
 	const user = await getUser();
 
 	if (!user) {
-		throw redirect(307, '/auth/login');
+		throw redirect(307, '/login');
 	}
 
 	const { data: profile } = await supabase

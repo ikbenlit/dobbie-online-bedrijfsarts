@@ -304,7 +304,8 @@ async function registerUser(registrationData: RegistrationData) {
       email: registrationData.email,
       password: registrationData.password,
       options: {
-        data: userMetadata
+        data: userMetadata,
+        emailRedirectTo: `${window.location.origin}/auth/callback`
       }
     });
 

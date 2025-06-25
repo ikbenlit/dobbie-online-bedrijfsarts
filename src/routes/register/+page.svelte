@@ -21,6 +21,7 @@
   // UI state
   let isLoading = false;
   let errorMessage = '';
+  let successMessage = '';
   let orgValidationResult: any = null;
   let isValidatingOrg = false;
   
@@ -95,20 +96,52 @@
     }
   }
   
-  // Handle registration submission
+  // Handle registration submission with API first, fallback to client-side
   async function handleRegistration() {
     if (!validateCurrentStep()) return;
     
     isLoading = true;
     errorMessage = '';
+    successMessage = '';
     
     try {
-      await registerUser(registrationData);
-      console.log('Registratie succesvol!');
-      goto('/chat');
+      // Try API route first
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Er is een fout opgetreden tijdens registratie.');
+      }
+
+      if (result.requiresConfirmation) {
+        console.log('Email confirmatie vereist');
+        successMessage = result.message;
+        errorMessage = ''; // Clear error message
+        isLoading = false; // Reset loading state
+        return;
+      } else {
+        console.log('Registratie succesvol via API!');
+        goto('/chat');
+      }
     } catch (error: any) {
-      console.error('Registratie fout:', error);
-      errorMessage = error.message || 'Er is een fout opgetreden tijdens registratie.';
+      console.error('API registratie fout, probeer client-side fallback:', error);
+      
+      // Fallback to client-side registration
+      try {
+        await registerUser(registrationData);
+        console.log('Registratie succesvol via client-side fallback!');
+        goto('/chat');
+      } catch (clientError: any) {
+        console.error('Client-side registratie fout:', clientError);
+        errorMessage = clientError.message || error.message || 'Er is een fout opgetreden tijdens registratie.';
+      }
     } finally {
       isLoading = false;
     }
@@ -349,6 +382,19 @@
           <p class="mt-4 text-center text-[14px] text-red-600">
             {errorMessage}
           </p>
+        {/if}
+        
+        {#if successMessage}
+          <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
+            <div class="flex">
+              <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <div class="ml-3">
+                <p class="text-sm font-medium text-green-800">{successMessage}</p>
+              </div>
+            </div>
+          </div>
         {/if}
       </form>
 

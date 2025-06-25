@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { supabase } from '$lib/supabase/client';
-  import { browser } from '$app/environment';
   import { toast } from 'svelte-sonner';
   
   let email = '';
@@ -20,29 +17,34 @@
     message = '';
     isSuccess = false;
 
-    // Dynamische redirect URL voor dev/prod
-    const redirectTo = browser
-      ? `${window.location.origin}/reset-password`
-      : 'https://deonlinebedrijfsarts.nl/reset-password';
+    try {
+      // Use API route for consistency
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email })
+      });
 
-    console.log('Sending reset email with redirect:', redirectTo);
+      const result = await response.json();
 
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo
-    });
+      if (!response.ok) {
+        throw new Error(result.error || 'Er ging iets mis bij het verzenden van de reset e-mail.');
+      }
 
-    isLoading = false;
-
-    if (resetError) {
-      console.error('Reset password error:', resetError);
-      message = 'Er ging iets mis. Controleer je e-mailadres en probeer opnieuw.';
-      isSuccess = false;
-      toast.error(resetError.message);
-    } else {
       message = `Een 6-cijferige code is verstuurd naar ${email}. Controleer je inbox.`;
       isSuccess = true;
       toast.success('Herstelcode verstuurd!');
       email = ''; // Clear form
+
+    } catch (error: any) {
+      console.error('Forgot password error:', error);
+      message = error.message || 'Er ging iets mis. Controleer je e-mailadres en probeer opnieuw.';
+      isSuccess = false;
+      toast.error(error.message);
+    } finally {
+      isLoading = false;
     }
   }
 </script>
