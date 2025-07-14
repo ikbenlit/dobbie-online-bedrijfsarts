@@ -1,7 +1,7 @@
 import { getModel } from './config';
 import { ReadableStream } from 'node:stream/web';
 import { createPromptWithContext } from './prompt-config';
-import { trimMessagesToTokenLimit, estimateTokens, DEFAULT_TOKEN_LIMIT } from '../utils/token-helper';
+import { trimMessagesToTokenLimit, estimateTokens, DEFAULT_TOKEN_LIMIT } from '../utils/token-helper.js';
 
 export async function createChatStream(messages: Array<{ role: string; content: string }>) {
     try {
