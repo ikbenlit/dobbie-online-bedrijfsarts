@@ -8,7 +8,20 @@
 
   // DoBbie's custom renderer voor bedrijfsarts-specifieke content
   const renderer = new marked.Renderer();
-  
+
+  /**
+   * Parses basic markdown for bold and italic text using regex.
+   * This is a safe alternative to the full parser, avoiding complex token issues.
+   * @param text The raw text to parse.
+   * @returns HTML string with basic markdown converted.
+   */
+  function parseBasicMarkdown(text: string): string {
+    if (!text) return '';
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+      .replace(/\*(.*?)\*/g, '<em>$1</em>'); // Italic
+  }
+
   // Custom styling voor DOBbie's professionele uitdrukkingen
   renderer.text = (token: Tokens.Text | Tokens.Escape | Tokens.Tag) => {
     let text = String(token.text ?? '');
@@ -59,29 +72,25 @@
     return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="text-[#771138] underline hover:text-[#5A0D29] transition-colors font-medium">${text}</a>`;
   };
 
-  // Custom list rendering voor actielijsten en procedures
+  // Custom list rendering to handle special procedure lists and safe markdown parsing.
+  renderer.listitem = function(token: Tokens.ListItem) {
+    const text = parseBasicMarkdown(token.text);
+    return `<li class="flex items-start"><span class="mr-2 mt-1 text-[#771138]">•</span><span>${text}</span></li>`;
+  };
+
   renderer.list = function(token: Tokens.List) {
     const ordered = token.ordered ?? false;
     const procedureKeywords = ['Meld', 'Plan', 'Vraag', 'Bespreek', 'Controleer', 'Documenteer'];
     
-    const itemsHtml = (token.items ?? [])
+    // Safely render each list item by parsing its text individually.
+    const itemsHtml = token.items
       .map(item => {
-        let itemText = this.parser.parseInline(item.tokens);
-        // Workaround voor **bold**
-        itemText = itemText.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-[#771138]">$1</strong>');
-        
-        // Maak het eerste woord van een procedure-stap vet en rood
-        const firstWord = item.text.split(' ')[0];
-        if (procedureKeywords.includes(firstWord)) {
-           // We vervangen de platte tekst in de gerenderde HTML
-           itemText = itemText.replace(firstWord, `<strong class="font-semibold text-[#771138]">${firstWord}</strong>`);
-        }
-
-        return `<li class="flex items-start"><span class="mr-2 mt-1 text-[#771138]">${ordered ? '📋' : '•'}</span><span>${itemText}</span></li>`;
+        const text = parseBasicMarkdown(item.text);
+        return `<li class="flex items-start"><span class="mr-2 mt-1 text-[#771138]">•</span><span>${text}</span></li>`;
       })
       .join('');
     
-    // Check of het een procedure-lijst is gebaseerd op de onbewerkte text
+    // Check if it's a procedure list based on the raw text content.
     const rawTextContent = token.items.map(item => item.text).join(' ');
     const isProcedureList = procedureKeywords.some(keyword => rawTextContent.includes(keyword));
 

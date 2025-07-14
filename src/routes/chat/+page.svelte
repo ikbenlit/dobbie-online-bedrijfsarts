@@ -179,7 +179,6 @@
 
     const messagesForAPI = messages
       .filter(msg => msg.role)
-      .slice(-8) 
       .map(msg => ({
         role: msg.role,
         content: msg.text
@@ -189,7 +188,7 @@
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: messagesForAPI.slice(0, -1) }) 
+        body: JSON.stringify({ messages: messagesForAPI }) 
       });
 
       if (!response.ok) {

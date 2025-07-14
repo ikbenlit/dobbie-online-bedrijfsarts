@@ -90,7 +90,7 @@ const dobieConfig = {
     model: 'gemini-2.5-flash',
     generationConfig: {
         temperature: 0.3,        // Lage temp voor consistente, feitelijke antwoorden
-        maxOutputTokens: 2048,    // Verhoogd voor langere antwoorden
+        maxOutputTokens: 8192,    // Maximale waarde voor zeer lange antwoorden
         topP: 0.8,              // Nucleus sampling voor kwaliteit
         topK: 40,               // Beperkt aantal kandidaten
         candidateCount: 1,       // Eén antwoord per keer
