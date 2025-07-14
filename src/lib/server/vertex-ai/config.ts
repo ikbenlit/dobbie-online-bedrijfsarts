@@ -87,10 +87,10 @@ export { vertexAI };
 
 // DoBie specifieke configuratie
 const dobieConfig = {
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     generationConfig: {
         temperature: 0.3,        // Lage temp voor consistente, feitelijke antwoorden
-        maxOutputTokens: 500,    // Kort en bondig (zoals Talar wil)
+        maxOutputTokens: 2048,    // Verhoogd voor langere antwoorden
         topP: 0.8,              // Nucleus sampling voor kwaliteit
         topK: 40,               // Beperkt aantal kandidaten
         candidateCount: 1,       // Eén antwoord per keer
