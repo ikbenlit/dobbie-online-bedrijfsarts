@@ -1,7 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { supabase } from '$lib/supabase/client.js';
 import type { RegistrationData } from '$lib/stores/userStore.js';
-import { EmailService } from '$lib/services/email.js';
 
 export async function POST({ request }) {
   try {
@@ -70,7 +69,7 @@ export async function POST({ request }) {
       userMetadata.organization_id = organizationId;
     }
 
-    // Register user with Supabase Auth (without email confirmation)
+    // Register user with Supabase Auth (with native email confirmation)
     const { data, error } = await supabase.auth.signUp({
       email: registrationData.email,
       password: registrationData.password,
@@ -93,17 +92,7 @@ export async function POST({ request }) {
       }, { status: 500 });
     }
 
-    // Send custom registration confirmation email via Resend (temporary)
-    try {
-      await EmailService.sendRegistrationConfirmation({
-        full_name: registrationData.full_name,
-        email: registrationData.email,
-        confirmation_url: redirectTo
-      });
-    } catch (emailError) {
-      console.error('Email sending error:', emailError);
-      // Don't fail registration if email fails, just log it
-    }
+    // Supabase will automatically send confirmation email via SMTP
 
     // Check if email confirmation is required
     if (!data.session) {
