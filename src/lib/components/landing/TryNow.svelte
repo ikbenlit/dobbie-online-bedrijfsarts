@@ -13,7 +13,7 @@
                         Klaar voor professioneel verzuimadvies?
                     </h2>
                     <p class="mt-4 text-body text-gray-dark">
-                        Start direct met De Online Bedrijfsarts en krijg toegang tot professionele ondersteuning bij verzuim en re-integratie.
+                        Start direct met de Online Verzuimbuddy en krijg toegang tot professionele ondersteuning bij verzuim en re-integratie.
                     </p>
                     <form class="mt-8 space-y-6">
                         <div>

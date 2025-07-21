@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="font-serif text-h1 font-bold text-bordeaux leading-tight">DOBbie - De Online Bedrijfsarts: Professioneel advies binnen handbereik</h1>
+                <h1 class="font-serif text-h1 font-bold text-bordeaux leading-tight">DOBbie - Online Verzuimadvies: Professioneel advies binnen handbereik</h1>
                 <p class="mt-4 text-body text-gray-dark">Direct antwoord op al uw vragen over verzuim, re-integratie en arbeidsgerelateerde zaken. Efficiënt, betrouwbaar en altijd beschikbaar.</p>
                 <div class="mt-8 flex flex-col sm:flex-row">
                     <a href="/login" class="bg-bordeaux text-white font-bold text-button px-6 py-3 rounded-button shadow-card hover:bg-bordeaux-hover transition-colors duration-300 text-center">Start direct</a>
@@ -26,7 +26,7 @@
                     <div class="py-4 h-64 overflow-y-auto">
                         <div class="flex mb-4">
                             <div class="bg-cream rounded-[16px_16px_16px_4px] py-2 px-4 max-w-[80%]">
-                                <p class="text-gray-dark">Goedendag! Ik ben DOBbie uw digitale bedrijfsarts-assistent. Hoe kan ik u vandaag helpen?</p>
+                                <p class="text-gray-dark">Goedendag! Ik ben DOBbie uw digitale verzuimbuddy. Hoe kan ik u vandaag helpen?</p>
                             </div>
                         </div>
                         <div class="flex justify-end mb-4">

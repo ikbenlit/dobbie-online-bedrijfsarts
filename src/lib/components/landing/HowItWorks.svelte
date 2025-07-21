@@ -6,7 +6,7 @@
 <section id="how-it-works" class="py-16 md:py-24 bg-cream" use:animateOnScroll>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 md:mb-16">
-            <h2 class="font-serif text-h2 font-bold text-bordeaux">Zo Werkt DOBbie - De Online Bedrijfsarts</h2>
+            <h2 class="font-serif text-h2 font-bold text-bordeaux">Zo Werkt DOBbie - Online Verzuimadvies</h2>
             <p class="mt-4 text-body text-gray-dark max-w-3xl mx-auto">
                 Professionele ondersteuning bij verzuim en re-integratie, direct beschikbaar wanneer u het nodig heeft.
             </p>

@@ -7,10 +7,10 @@
 					<svg class="h-8 w-8 text-pink-strong" fill="currentColor" viewBox="0 0 20 20">
 						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
 					</svg>
-					<span class="ml-2 text-xl font-bold">DOBbie - De Online Bedrijfsarts</span>
+					<span class="ml-2 text-xl font-bold">DOBbie - Online Verzuimadvies</span>
 				</div>
 				<p class="text-gray-400 text-sm">
-					Je digitale bedrijfsarts die 24/7 beschikbaar is voor al je vragen over gezondheid en werk. Snelle, betrouwbare en persoonlijke ondersteuning.
+					Je online verzuimbuddy die 24/7 beschikbaar is voor al je vragen over gezondheid en werk. Snelle, betrouwbare en persoonlijke ondersteuning.
 				</p>
 			</div>
 			
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		<div class="mt-12 border-t border-dark-gray-3 pt-8 flex flex-col md:flex-row justify-between items-center">
-			<p class="text-gray-400 text-sm">© 2024 DOBbie - De Online Bedrijfsarts. Alle rechten voorbehouden.</p>
+			<p class="text-gray-400 text-sm">© 2024 DOBbie - Online Verzuimadvies. Alle rechten voorbehouden.</p>
 			<div class="mt-4 md:mt-0 flex space-x-6">
 				<a href="#" class="text-gray-400 hover:text-pink-strong" aria-label="LinkedIn">
 					<span class="sr-only">LinkedIn</span>

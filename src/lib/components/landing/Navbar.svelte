@@ -20,7 +20,7 @@
 							clip-rule="evenodd"
 						></path>
 					</svg>
-					<span class="ml-2 text-h3 font-serif font-bold text-bordeaux">DOBbie - De Online Bedrijfsarts</span>
+					<span class="ml-2 text-h3 font-serif font-bold text-bordeaux">DOBbie - Online Verzuimadvies</span>
 				</div>
 			</div>
 			<div class="hidden md:flex items-center space-x-8">
