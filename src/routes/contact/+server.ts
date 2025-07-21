@@ -1,29 +1,7 @@
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { supabase } from '$lib/supabase/client';
-
-// This would be replaced by a proper email sending service like Resend or Postmark
-async function sendEmailToAdmin(formData: {
-	subject: string;
-	message: string;
-	urgency: string;
-	user_email: string;
-	user_id: string;
-}) {
-	console.log('--- SENDING EMAIL TO ADMIN ---');
-	console.log('To: talar@dobbie.nl');
-	console.log(`From: noreply@dobbie.nl (on behalf of ${formData.user_email})`);
-	console.log(`Subject: [DoBbie Contact] ${formData.subject}`);
-	console.log(`Urgency: ${formData.urgency}`);
-	console.log('---');
-	console.log(formData.message);
-	console.log('--- END OF EMAIL ---');
-
-	// In a real app, you would have the logic here:
-	// await resend.emails.send({ ... });
-
-	return { success: true };
-}
+import { EmailService } from '$lib/services/email.js';
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 	const session = await locals.getSession();
@@ -51,17 +29,25 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		throw error(500, 'Failed to update user profile.');
 	}
 
-	// 2. Send email notification to admin (Talar)
+	// 2. Get user profile for full name
+	const { data: userProfile } = await supabase
+		.from('profiles')
+		.select('full_name')
+		.eq('id', session.user.id)
+		.single();
+
+	// 3. Send email notification to admin via Resend
 	try {
-		await sendEmailToAdmin({
+		await EmailService.sendContactForm({
 			subject,
 			message,
 			urgency,
 			user_id: session.user.id,
-			user_email: session.user.email || 'N/A'
+			user_email: session.user.email || 'N/A',
+			full_name: userProfile?.full_name || 'Onbekende gebruiker'
 		});
 	} catch (emailError) {
-		console.error('Error sending email:', emailError);
+		console.error('Error sending email via Resend:', emailError);
 		// We don't block the user if email fails, but we should log it.
 		// In a real app, you might have more robust error handling here.
 	}

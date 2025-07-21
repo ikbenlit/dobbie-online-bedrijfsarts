@@ -6,11 +6,20 @@
       "Bash(timeout 10s npm run dev)",
       "Bash(curl:*)",
       "mcp__supabase__get_project_url",
-      "mcp__supabase__execute_sql"
+      "mcp__supabase__execute_sql",
+      "Bash(ls:*)",
+      "Bash(git add:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(node:*)",
+      "WebFetch(domain:resend.com)",
+      "WebFetch(domain:supabase.com)"
     ],
     "deny": []
   },
   "enabledMcpjsonServers": [
-    "supabase"
+    "supabase",
+    "browser",
+    "supabase-aio-scanner"
   ]
 }

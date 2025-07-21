@@ -11,6 +11,10 @@
         "env": {
           "SUPABASE_ACCESS_TOKEN": "sbp_912fbc2bbba655adc41f843e91f99472afee5040"
         }
-      }
+      },
+      "browser": {
+        "command": "npx",
+        "args": ["@agentdeskai/browser-tools-mcp"]
+      }  
     }
   }

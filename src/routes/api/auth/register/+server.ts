@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { supabase } from '$lib/supabase/client.js';
 import type { RegistrationData } from '$lib/stores/userStore.js';
+import { EmailService } from '$lib/services/email.js';
 
 export async function POST({ request }) {
   try {
@@ -23,6 +24,9 @@ export async function POST({ request }) {
       return json({ error: 'Volledige naam is verplicht' }, { status: 400 });
     }
 
+    // Organisatie validatie variabele
+    let organizationId: string | null = null;
+
     // Validatie voor organisatieleden
     if (registrationData.account_type === 'organization_member') {
       if (!registrationData.organization_code) {
@@ -30,7 +34,6 @@ export async function POST({ request }) {
       }
 
       // Valideer organisatiecode en haal organization_id op
-      let organizationId: string | null = null;
       try {
         const { data: orgData, error: orgError } = await supabase.rpc('validate_organization_code', {
           org_code_to_check: registrationData.organization_code
@@ -67,7 +70,7 @@ export async function POST({ request }) {
       userMetadata.organization_id = organizationId;
     }
 
-    // Register user with Supabase Auth
+    // Register user with Supabase Auth (without email confirmation)
     const { data, error } = await supabase.auth.signUp({
       email: registrationData.email,
       password: registrationData.password,
@@ -88,6 +91,18 @@ export async function POST({ request }) {
       return json({ 
         error: 'Er is een onbekende fout opgetreden tijdens registratie' 
       }, { status: 500 });
+    }
+
+    // Send custom registration confirmation email via Resend (temporary)
+    try {
+      await EmailService.sendRegistrationConfirmation({
+        full_name: registrationData.full_name,
+        email: registrationData.email,
+        confirmation_url: redirectTo
+      });
+    } catch (emailError) {
+      console.error('Email sending error:', emailError);
+      // Don't fail registration if email fails, just log it
     }
 
     // Check if email confirmation is required

@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation';
   import { registerUser, validateOrganizationCode } from '$lib/stores/userStore.js';
   import { debounce } from '$lib/utils.js';
+  import PasswordInput from '$lib/components/ui/PasswordInput.svelte';
   
   // Multi-step state
   let currentStep = 1;
@@ -232,14 +233,13 @@
           
           <div>
             <label for="password" class="block text-[15px] font-semibold text-[#3D3D3D] mb-2">Wachtwoord</label>
-            <input 
-              type="password" 
+            <PasswordInput 
               id="password" 
               bind:value={registrationData.password}
-              class="bg-white border border-[#D1D5DB] rounded-md px-4 py-3 w-full focus:border-[#771138] focus:outline-none focus:ring-2 focus:ring-[#771138]/20 transition-all duration-300 ease-in-out"
               placeholder="Minimaal 6 karakters" 
               required
-            >
+              autocomplete="new-password"
+            />
             {#if formErrors.password}
               <p class="mt-1 text-[14px] text-red-600">{formErrors.password}</p>
             {/if}
@@ -247,14 +247,13 @@
           
           <div>
             <label for="confirmPassword" class="block text-[15px] font-semibold text-[#3D3D3D] mb-2">Bevestig wachtwoord</label>
-            <input 
-              type="password" 
+            <PasswordInput 
               id="confirmPassword" 
               bind:value={registrationData.confirmPassword}
-              class="bg-white border border-[#D1D5DB] rounded-md px-4 py-3 w-full focus:border-[#771138] focus:outline-none focus:ring-2 focus:ring-[#771138]/20 transition-all duration-300 ease-in-out"
               placeholder="Herhaal uw wachtwoord" 
               required
-            >
+              autocomplete="new-password"
+            />
             {#if formErrors.confirmPassword}
               <p class="mt-1 text-[14px] text-red-600">{formErrors.confirmPassword}</p>
             {/if}

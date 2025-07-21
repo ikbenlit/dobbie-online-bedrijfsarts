@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabase/client';
 	import { toast } from 'svelte-sonner';
+	import PasswordInput from '$lib/components/ui/PasswordInput.svelte';
 
 	// State management
 	let step: 'verify' | 'update' = 'verify';
@@ -171,14 +172,13 @@
 						<label for="password" class="block text-[15px] font-semibold text-[#3D3D3D] mb-2">
 							Nieuw wachtwoord
 						</label>
-						<input
+						<PasswordInput
 							id="password"
-							type="password"
 							bind:value={newPassword}
 							required
 							minlength="8"
-							class="bg-white border border-[#D1D5DB] rounded-md px-4 py-3 w-full focus:border-[#771138] focus:outline-none focus:ring-2 focus:ring-[#771138]/20 transition-all duration-300 ease-in-out"
 							placeholder="Minimaal 8 karakters"
+							autocomplete="new-password"
 						/>
 					</div>
 					<div>
@@ -188,14 +188,13 @@
 						>
 							Bevestig wachtwoord
 						</label>
-						<input
+						<PasswordInput
 							id="confirmPassword"
-							type="password"
 							bind:value={confirmPassword}
 							required
 							minlength="8"
-							class="bg-white border border-[#D1D5DB] rounded-md px-4 py-3 w-full focus:border-[#771138] focus:outline-none focus:ring-2 focus:ring-[#771138]/20 transition-all duration-300 ease-in-out"
 							placeholder="Herhaal je nieuwe wachtwoord"
+							autocomplete="new-password"
 						/>
 					</div>
 					<button

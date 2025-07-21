@@ -3,6 +3,7 @@
   import { invalidateAll } from '$app/navigation';
   import { signIn, user } from '$lib/stores/userStore.js';
   import AvatarBubble from '$lib/components/ui/AvatarBubble.svelte';
+  import PasswordInput from '$lib/components/ui/PasswordInput.svelte';
 
   let email = '';
   let password = '';
@@ -89,14 +90,12 @@
         
         <div>
           <label for="password" class="block text-[15px] font-semibold text-[#3D3D3D] mb-2">Wachtwoord</label>
-          <input 
-            type="password" 
+          <PasswordInput 
             id="password" 
             bind:value={password}
-            class="bg-white border border-[#D1D5DB] rounded-md px-4 py-3 w-full focus:border-[#771138] focus:outline-none focus:ring-2 focus:ring-[#771138]/20 transition-all duration-300 ease-in-out"
             placeholder="••••••••" 
             required
-          >
+          />
         </div>
         
         <div class="flex justify-between items-center">
