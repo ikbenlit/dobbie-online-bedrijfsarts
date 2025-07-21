@@ -13,7 +13,9 @@
       "Bash(npm run build:*)",
       "Bash(node:*)",
       "WebFetch(domain:resend.com)",
-      "WebFetch(domain:supabase.com)"
+      "WebFetch(domain:supabase.com)",
+      "WebFetch(domain:docs.mollie.com)",
+      "Bash(npm run test:unit:*)"
     ],
     "deny": []
   },

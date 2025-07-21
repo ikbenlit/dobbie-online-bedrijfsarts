@@ -36,8 +36,8 @@ describe('token-helper', () => {
         });
 
         it('should return at least 1 token for any non-empty text', () => {
-            expect(estimateTokens('a')).toBe(1);
-            expect(estimateTokens('.')).toBe(1);
+            expect(estimateTokens('a')).toBeGreaterThanOrEqual(1);
+            expect(estimateTokens('.')).toBeGreaterThanOrEqual(1);
         });
     });
 

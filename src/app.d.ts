@@ -21,6 +21,8 @@ declare global {
 			PUBLIC_SUPABASE_ANON_KEY: string;
 			ANTHROPIC_API_KEY: string;
 			VERTEX_PROJECT_ID: string;
+			MOLLIE_API_KEY_TEST: string;
+			MOLLIE_API_KEY_LIVE: string;
 		}
 	}
 }

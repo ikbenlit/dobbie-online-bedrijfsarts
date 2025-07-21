@@ -77,10 +77,12 @@
 	"dependencies": {
 		"@google-cloud/vertexai": "^1.10.0",
 		"@heroicons/react": "^2.2.0",
+		"@mollie/api-client": "^4.3.3",
 		"@supabase/auth-helpers-sveltekit": "^0.13.0",
 		"@supabase/supabase-js": "^2.50.0",
 		"@vercel/functions": "^2.1.0",
 		"clsx": "^2.1.1",
+		"integration": "^0.3.1",
 		"lucide-svelte": "^0.511.0",
 		"marked": "^15.0.12",
 		"resend": "^4.6.0",
