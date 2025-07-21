@@ -33,7 +33,7 @@
 </script>
 
 <svelte:head>
-	<title>DoBbie - De Online Bedrijfsarts | Uw digitale partner in verzuimbegeleiding</title>
+	<title>DoBbie - Online Verzuimadvies | Uw digitale partner in verzuimbegeleiding</title>
 	<meta name="description" content="24/7 professioneel advies over verzuim, Wet Poortwachter en personeelsbeleid. Direct antwoord op al uw vragen over verzuimbegeleiding en wet- en regelgeving." />
 
 	<!-- Favicon -->
@@ -41,17 +41,17 @@
 	<link rel="apple-touch-icon" href="/images/logo-dobie-favicon.png" />
 
 	<!-- Open Graph voor social sharing -->
-	<meta property="og:title" content="DoBbieDe Online Bedrijfsarts | Uw digitale partner in verzuimbegeleiding" />
+	<meta property="og:title" content="DoBbie - Online Verzuimadvies | Uw digitale partner in verzuimbegeleiding" />
 	<meta property="og:description" content="24/7 professioneel advies over verzuim, Wet Poortwachter en personeelsbeleid. Direct antwoord op al uw vragen over verzuimbegeleiding en wet- en regelgeving." />
-	<meta property="og:image" content="https://deonlinebedrijfsarts.nl/images/dobbie-social-card.webp" />
-	<meta property="og:url" content="https://deonlinebedrijfsarts.nl/" />
+	<meta property="og:image" content="https://onlineverzuimadvies.nl/images/dobbie-social-card.webp" />
+	<meta property="og:url" content="https://onlineverzuimadvies.nl/" />
 	<meta property="og:type" content="website" />
 
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="DoBbie - De Online Bedrijfsarts | Uw digitale partner in verzuimbegeleiding" />
+	<meta name="twitter:title" content="DoBbie - Online Verzuimadvies | Uw digitale partner in verzuimbegeleiding" />
 	<meta name="twitter:description" content="24/7 professioneel advies over verzuim, Wet Poortwachter en personeelsbeleid. Direct antwoord op al uw vragen over verzuimbegeleiding en wet- en regelgeving." />
-	<meta name="twitter:image" content="https://deonlinebedrijfsarts.nl/images/dobbie-social-card.webp" />
+	<meta name="twitter:image" content="https://onlineverzuimadvies.nl/images/dobbie-social-card.webp" />
 
 	<meta name="robots" content="noindex, nofollow" />
 	<style>
