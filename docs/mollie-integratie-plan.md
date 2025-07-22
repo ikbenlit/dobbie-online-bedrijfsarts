@@ -12,8 +12,9 @@
 | | 1.2 Database Schema Uitbreiding | ✅ Voltooid | Developer | Migration 20250721 succesvol uitgevoerd |
 | | 1.3 Mollie SDK Installatie & Setup | ✅ Voltooid | Developer | @mollie/api-client v4.3.3 geïnstalleerd, client setup compleet |
 | **Fase 2** | 2.1 Backend API Development | ✅ Voltooid | Developer | Alle API endpoints geïmplementeerd en getest |
-| | 2.2 Frontend Payment Components | ⏳ Gepland | Developer | Betaalschermen, status displays |
-| **Fase 3** | 3.1 Webhook Implementatie | ⏳ Gepland | Developer | Status updates, failure handling |
+| | 2.2 Test Dashboard Development | ✅ Voltooid | Developer | /test/mollie pagina voor API testing |
+| | 2.3 Frontend Payment Components | 🔄 Later | Developer | Production betaalschermen (na testing fase) |
+| **Fase 3** | 3.1 Webhook Implementatie | ✅ Voltooid | Developer | Complete webhook infrastructure met email notifications |
 | | 3.2 Subscription Management | ⏳ Gepland | Developer | Recurring billing, cancellation |
 | **Fase 4** | 4.1 Testing & Security Hardening | ⏳ Gepland | Developer | End-to-end tests, webhook security |
 | | 4.2 Error Handling & Monitoring | ⏳ Gepland | Developer | Failed payments, retry logic |
@@ -40,10 +41,12 @@ Alle ontwikkeling volgt deze kernprincipes:
 
 ## 4. Teststrategie
 
+*   **Test Dashboard Approach:** Gebruik `/test/mollie` pagina voor comprehensive API testing zonder productie impact.
 *   **Pragmatische Aanpak:** Focus op happy path voor subscription flow en kritieke foutscenario's.
-*   **Handmatige verificatie (MVP):** Test volledige betaalflow: trial → payment request → successful payment → activated subscription.
+*   **API Validation First:** Test alle Mollie operaties via test dashboard voordat frontend integration.
 *   **Unit Tests (Basis):** Test Mollie client helpers, webhook validation, subscription state transitions.
 *   **Webhook Tests:** Gebruik Mollie's test webhooks om payment status changes te valideren zonder echte betalingen.
+*   **Production Integration Later:** Frontend components en payment enforcement na volledige backend validatie.
 
 ---
 
@@ -101,9 +104,20 @@ Alle ontwikkeling volgt deze kernprincipes:
     4.  **Subscription Management API:** PATCH/DELETE endpoints voor subscription updates en cancellation.
     5.  **Error Handling:** Implementeer consistent error handling met proper HTTP status codes.
 
-### **Sub-fase 2.2: Frontend Payment Components**
+### **Sub-fase 2.2: Test Dashboard Development**
 
-*   **Doel:** Bouw Svelte componenten voor payment user interface.
+*   **Doel:** Bouw test interface voor Mollie API validatie zonder productie impact.
+*   **Developer Taken:**
+    1.  **Test Page Setup:** Maak `/test/mollie` pagina voor API testing.
+    2.  **Customer Operations:** UI voor customer creation en management testing.
+    3.  **Subscription Testing:** Interface voor subscription creation en status checks.
+    4.  **Payment Status Display:** Real-time payment status lookup en validation.
+    5.  **Results Logging:** Comprehensive test results met JSON response display.
+
+### **Sub-fase 2.3: Frontend Payment Components**
+
+*   **Doel:** Bouw production-ready Svelte componenten voor payment user interface (uitgevoerd na testing fase).
+*   **Status:** 🔄 Uitgesteld tot na webhook implementatie en testing validatie.
 *   **Developer Taken:**
     1.  **SubscriptionUpgrade Component:** Vervang contact form met direct payment flow na trial expiry.
     2.  **PaymentMethod Component:** UI voor betaalmethode selectie (iDEAL, creditcard, etc.).
@@ -112,10 +126,13 @@ Alle ontwikkeling volgt deze kernprincipes:
     5.  **Integration met userStore:** Update subscription status in bestaande store na successful payment.
 
 ### **Definition of Done voor Fase 2:**
-*   API endpoints zijn geïmplementeerd en testen successful met Mollie test data
-*   Frontend componenten tonen correctly payment options en status updates
-*   User kan van trial naar betaalde subscription zonder manual admin intervention
-*   Payment flow integreert naadloos met bestaande user experience
+*   API endpoints zijn geïmplementeerd en testen successful met Mollie test data ✅
+*   Test dashboard is operationeel voor API validatie zonder productie impact ✅
+*   Alle core Mollie operations zijn testbaar via UI interface ✅
+*   API responses worden correct gelogd en gedisplayed voor debugging ✅
+*   ~~Frontend componenten tonen correctly payment options en status updates~~ (uitgesteld naar 2.3)
+*   ~~User kan van trial naar betaalde subscription zonder manual admin intervention~~ (uitgesteld naar 2.3)
+*   ~~Payment flow integreert naadloos met bestaande user experience~~ (uitgesteld naar 2.3)
 
 ---
 
@@ -144,10 +161,14 @@ Alle ontwikkeling volgt deze kernprincipes:
     5.  **Subscription Status Sync:** Periodic sync tussen Mollie en local database voor data consistency.
 
 ### **Definition of Done voor Fase 3:**
-*   Webhooks zijn fully functional en verwerken alle relevante Mollie events correctly
-*   Subscription renewals gebeuren automatisch zonder manual intervention
-*   Failed payments triggeren appropriate user notifications en grace period flow
-*   Users kunnen hun subscription zelf beheren via frontend interface
+*   Webhooks zijn fully functional en verwerken alle relevante Mollie events correctly ✅
+*   Automated email notifications voor payment success, failure, en subscription activation ✅
+*   Real-time database synchronisatie tussen Mollie en lokale data ✅
+*   Production-ready webhook security met signature verification ✅
+*   Comprehensive webhook testing via test dashboard ✅
+*   ~~Subscription renewals gebeuren automatisch zonder manual intervention~~ (3.2)
+*   ~~Failed payments triggeren appropriate user notifications en grace period flow~~ (3.2)
+*   ~~Users kunnen hun subscription zelf beheren via frontend interface~~ (3.2)
 
 ---
 

@@ -23,6 +23,7 @@ declare global {
 			VERTEX_PROJECT_ID: string;
 			MOLLIE_API_KEY_TEST: string;
 			MOLLIE_API_KEY_LIVE: string;
+			MOLLIE_WEBHOOK_SECRET: string;
 		}
 	}
 }

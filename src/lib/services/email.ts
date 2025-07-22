@@ -25,6 +25,29 @@ export interface ContactFormEmailData {
   full_name: string;
 }
 
+export interface PaymentNotificationEmailData {
+  full_name: string;
+  email: string;
+  paymentId: string;
+  amount: {
+    value: string;
+    currency: string;
+  };
+  subscriptionId?: string;
+  status?: string;
+}
+
+export interface SubscriptionNotificationEmailData {
+  full_name: string;
+  email: string;
+  subscriptionId: string;
+  amount: {
+    value: string;
+    currency: string;
+  };
+  nextPaymentDate?: string;
+}
+
 /**
  * Email service for sending transactional emails via Resend
  */
@@ -72,6 +95,48 @@ export class EmailService {
       subject: `[DOBbie Contact] ${data.subject}`,
       html,
       replyTo: data.user_email
+    });
+  }
+
+  /**
+   * Send payment success confirmation email
+   */
+  static async sendPaymentSuccess(data: PaymentNotificationEmailData): Promise<void> {
+    const html = this.getPaymentSuccessTemplate(data);
+    
+    await resend.emails.send({
+      from: this.FROM_EMAIL,
+      to: data.email,
+      subject: 'Betaling bevestigd - DOBbie Abonnement',
+      html
+    });
+  }
+
+  /**
+   * Send payment failure notification email
+   */
+  static async sendPaymentFailed(data: PaymentNotificationEmailData): Promise<void> {
+    const html = this.getPaymentFailedTemplate(data);
+    
+    await resend.emails.send({
+      from: this.FROM_EMAIL,
+      to: data.email,
+      subject: 'Betaling mislukt - DOBbie Abonnement',
+      html
+    });
+  }
+
+  /**
+   * Send subscription activation confirmation email
+   */
+  static async sendSubscriptionActivated(data: SubscriptionNotificationEmailData): Promise<void> {
+    const html = this.getSubscriptionActivatedTemplate(data);
+    
+    await resend.emails.send({
+      from: this.FROM_EMAIL,
+      to: data.email,
+      subject: 'DOBbie abonnement geactiveerd - Welkom!',
+      html
     });
   }
 
@@ -430,6 +495,469 @@ export class EmailService {
         
         <div class="footer">
           <p>DOBbie - De Online Bedrijfsarts | Admin Notificatie</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+  }
+
+  /**
+   * Payment success email template
+   */
+  private static getPaymentSuccessTemplate(data: PaymentNotificationEmailData): string {
+    const formatAmount = (amount: { value: string; currency: string }) => {
+      return `€${parseFloat(amount.value).toFixed(2)}`;
+    };
+
+    return `
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Betaling bevestigd - DOBbie</title>
+      <style>
+        body {
+          font-family: 'Open Sans', Arial, sans-serif;
+          line-height: 1.6;
+          color: #3D3D3D;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #F5F2EB;
+        }
+        .container {
+          background-color: #ffffff;
+          border-radius: 8px;
+          padding: 40px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        .logo {
+          font-size: 28px;
+          font-weight: bold;
+          color: #771138;
+          margin-bottom: 10px;
+        }
+        .subtitle {
+          color: #707070;
+          font-size: 16px;
+        }
+        .success-icon {
+          font-size: 48px;
+          color: #28a745;
+          margin: 20px 0;
+        }
+        .content {
+          margin-bottom: 30px;
+        }
+        .payment-details {
+          background-color: #E8F5E8;
+          border: 1px solid #C3E6C3;
+          padding: 20px;
+          border-radius: 5px;
+          margin: 20px 0;
+        }
+        .detail-row {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+        .detail-label {
+          font-weight: bold;
+          color: #771138;
+        }
+        .button {
+          display: inline-block;
+          background-color: #771138;
+          color: #ffffff;
+          padding: 12px 30px;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+          margin: 20px 0;
+        }
+        .footer {
+          text-align: center;
+          margin-top: 30px;
+          padding-top: 20px;
+          border-top: 1px solid #E5E5E5;
+          color: #707070;
+          font-size: 14px;
+        }
+        .link {
+          color: #771138;
+          text-decoration: none;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <div class="logo">DOBbie</div>
+          <div class="subtitle">De Online Bedrijfsarts</div>
+          <div class="success-icon">✅</div>
+        </div>
+        
+        <div class="content">
+          <h2>Betaling bevestigd!</h2>
+          
+          <p>Hallo ${data.full_name},</p>
+          
+          <p>We hebben uw betaling succesvol ontvangen. Uw DOBbie abonnement is nu actief!</p>
+          
+          <div class="payment-details">
+            <div class="detail-row">
+              <span class="detail-label">Bedrag:</span>
+              <span>${formatAmount(data.amount)}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Betaling ID:</span>
+              <span>${data.paymentId}</span>
+            </div>
+            ${data.subscriptionId ? `
+            <div class="detail-row">
+              <span class="detail-label">Abonnement ID:</span>
+              <span>${data.subscriptionId}</span>
+            </div>
+            ` : ''}
+          </div>
+          
+          <p>U heeft nu volledige toegang tot DOBbie en kunt onbeperkt vragen stellen over verzuimbeleid, werknemersrechten, juridische aspecten en actuele wet- en regelgeving.</p>
+          
+          <div style="text-align: center;">
+            <a href="https://dobbie.nl/chat" class="button">Begin met chatten</a>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <p>Heeft u vragen over uw betaling? Neem contact op via <a href="mailto:support@dobbie.nl" class="link">support@dobbie.nl</a></p>
+          <p>DOBbie - De Online Bedrijfsarts | Professioneel verzuimadvies 24/7</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+  }
+
+  /**
+   * Payment failed email template
+   */
+  private static getPaymentFailedTemplate(data: PaymentNotificationEmailData): string {
+    const formatAmount = (amount: { value: string; currency: string }) => {
+      return `€${parseFloat(amount.value).toFixed(2)}`;
+    };
+
+    return `
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Betaling mislukt - DOBbie</title>
+      <style>
+        body {
+          font-family: 'Open Sans', Arial, sans-serif;
+          line-height: 1.6;
+          color: #3D3D3D;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #F5F2EB;
+        }
+        .container {
+          background-color: #ffffff;
+          border-radius: 8px;
+          padding: 40px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        .logo {
+          font-size: 28px;
+          font-weight: bold;
+          color: #771138;
+          margin-bottom: 10px;
+        }
+        .subtitle {
+          color: #707070;
+          font-size: 16px;
+        }
+        .error-icon {
+          font-size: 48px;
+          color: #dc3545;
+          margin: 20px 0;
+        }
+        .content {
+          margin-bottom: 30px;
+        }
+        .payment-details {
+          background-color: #FDF2F2;
+          border: 1px solid #F1C2C2;
+          padding: 20px;
+          border-radius: 5px;
+          margin: 20px 0;
+        }
+        .detail-row {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+        .detail-label {
+          font-weight: bold;
+          color: #771138;
+        }
+        .button {
+          display: inline-block;
+          background-color: #771138;
+          color: #ffffff;
+          padding: 12px 30px;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+          margin: 20px 0;
+        }
+        .help-section {
+          background-color: #F8F9FA;
+          border-left: 4px solid #771138;
+          padding: 20px;
+          margin: 20px 0;
+        }
+        .footer {
+          text-align: center;
+          margin-top: 30px;
+          padding-top: 20px;
+          border-top: 1px solid #E5E5E5;
+          color: #707070;
+          font-size: 14px;
+        }
+        .link {
+          color: #771138;
+          text-decoration: none;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <div class="logo">DOBbie</div>
+          <div class="subtitle">De Online Bedrijfsarts</div>
+          <div class="error-icon">❌</div>
+        </div>
+        
+        <div class="content">
+          <h2>Betaling mislukt</h2>
+          
+          <p>Hallo ${data.full_name},</p>
+          
+          <p>Helaas is uw betaling voor DOBbie niet succesvol verwerkt. Dit kan verschillende oorzaken hebben.</p>
+          
+          <div class="payment-details">
+            <div class="detail-row">
+              <span class="detail-label">Bedrag:</span>
+              <span>${formatAmount(data.amount)}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Status:</span>
+              <span style="color: #dc3545; font-weight: bold;">${data.status || 'Mislukt'}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Betaling ID:</span>
+              <span>${data.paymentId}</span>
+            </div>
+          </div>
+          
+          <div class="help-section">
+            <h3>Wat kunt u doen?</h3>
+            <ul>
+              <li>Controleer of uw betaalgegevens correct zijn</li>
+              <li>Zorg ervoor dat u voldoende saldo heeft</li>
+              <li>Probeer een andere betaalmethode</li>
+              <li>Neem contact met ons op als het probleem aanhoudt</li>
+            </ul>
+          </div>
+          
+          <div style="text-align: center;">
+            <a href="https://dobbie.nl/dashboard" class="button">Opnieuw proberen</a>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <p>Heeft u hulp nodig? Neem contact op via <a href="mailto:support@dobbie.nl" class="link">support@dobbie.nl</a></p>
+          <p>DOBbie - De Online Bedrijfsarts | Professioneel verzuimadvies 24/7</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+  }
+
+  /**
+   * Subscription activated email template
+   */
+  private static getSubscriptionActivatedTemplate(data: SubscriptionNotificationEmailData): string {
+    const formatAmount = (amount: { value: string; currency: string }) => {
+      return `€${parseFloat(amount.value).toFixed(2)}`;
+    };
+
+    const formatDate = (dateString?: string) => {
+      if (!dateString) return 'Onbekend';
+      return new Date(dateString).toLocaleDateString('nl-NL');
+    };
+
+    return `
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Abonnement geactiveerd - DOBbie</title>
+      <style>
+        body {
+          font-family: 'Open Sans', Arial, sans-serif;
+          line-height: 1.6;
+          color: #3D3D3D;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #F5F2EB;
+        }
+        .container {
+          background-color: #ffffff;
+          border-radius: 8px;
+          padding: 40px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        .logo {
+          font-size: 28px;
+          font-weight: bold;
+          color: #771138;
+          margin-bottom: 10px;
+        }
+        .subtitle {
+          color: #707070;
+          font-size: 16px;
+        }
+        .welcome-icon {
+          font-size: 48px;
+          color: #771138;
+          margin: 20px 0;
+        }
+        .content {
+          margin-bottom: 30px;
+        }
+        .subscription-details {
+          background-color: #F8F5FF;
+          border: 1px solid #D6C9FF;
+          padding: 20px;
+          border-radius: 5px;
+          margin: 20px 0;
+        }
+        .detail-row {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+        .detail-label {
+          font-weight: bold;
+          color: #771138;
+        }
+        .features-section {
+          background-color: #F5F2EB;
+          border-left: 4px solid #771138;
+          padding: 20px;
+          margin: 20px 0;
+        }
+        .button {
+          display: inline-block;
+          background-color: #771138;
+          color: #ffffff;
+          padding: 12px 30px;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+          margin: 20px 0;
+        }
+        .footer {
+          text-align: center;
+          margin-top: 30px;
+          padding-top: 20px;
+          border-top: 1px solid #E5E5E5;
+          color: #707070;
+          font-size: 14px;
+        }
+        .link {
+          color: #771138;
+          text-decoration: none;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <div class="logo">DOBbie</div>
+          <div class="subtitle">De Online Bedrijfsarts</div>
+          <div class="welcome-icon">🎉</div>
+        </div>
+        
+        <div class="content">
+          <h2>Welkom bij DOBbie Premium!</h2>
+          
+          <p>Hallo ${data.full_name},</p>
+          
+          <p>Fantastisch! Uw DOBbie abonnement is succesvol geactiveerd. U heeft nu volledige toegang tot alle premium functies.</p>
+          
+          <div class="subscription-details">
+            <div class="detail-row">
+              <span class="detail-label">Abonnement:</span>
+              <span>DOBbie Premium (Maandelijks)</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Bedrag:</span>
+              <span>${formatAmount(data.amount)} per maand</span>
+            </div>
+            ${data.nextPaymentDate ? `
+            <div class="detail-row">
+              <span class="detail-label">Volgende betaling:</span>
+              <span>${formatDate(data.nextPaymentDate)}</span>
+            </div>
+            ` : ''}
+            <div class="detail-row">
+              <span class="detail-label">Abonnement ID:</span>
+              <span>${data.subscriptionId}</span>
+            </div>
+          </div>
+          
+          <div class="features-section">
+            <h3>Wat krijgt u met DOBbie Premium?</h3>
+            <ul>
+              <li><strong>Onbeperkte vragen</strong> - Stel zoveel vragen als u wilt</li>
+              <li><strong>24/7 beschikbaar</strong> - Altijd toegang tot professioneel verzuimadvies</li>
+              <li><strong>Actuele wetgeving</strong> - Altijd op de hoogte van de laatste wijzigingen</li>
+              <li><strong>Juridisch onderbouwde antwoorden</strong> - Betrouwbare informatie voor uw beslissingen</li>
+              <li><strong>Directe doorverwijzing</strong> - Naar gekwalificeerde bedrijfsartsen wanneer nodig</li>
+            </ul>
+          </div>
+          
+          <div style="text-align: center;">
+            <a href="https://dobbie.nl/chat" class="button">Begin met chatten</a>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <p>Uw abonnement wordt automatisch verlengd. U kunt op elk moment opzeggen via uw dashboard.</p>
+          <p>Heeft u vragen? Neem contact op via <a href="mailto:support@dobbie.nl" class="link">support@dobbie.nl</a></p>
+          <p>DOBbie - De Online Bedrijfsarts | Professioneel verzuimadvies 24/7</p>
         </div>
       </div>
     </body>
